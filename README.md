@@ -10,10 +10,12 @@ Yezichak provides advanced features not available in other browser-based diction
 *   Automatic note creation for the [Anki](https://apps.ankiweb.net/) flashcard program
 *   Clean, modern code makes it easy for developers to contribute new features
 
-[![Term definitions](img/ss-terms-thumb.png)](img/ss-terms.png)
-[![Kanji information](img/ss-kanji-thumb.png)](img/ss-kanji.png)
-[![Dictionary options](img/ss-dictionaries-thumb.png)](img/ss-dictionaries.png)
-[![Anki options](img/ss-anki-thumb.png)](img/ss-anki.png)
+[![Languages](img/ss-languages-thumb.png)](img/ss-languages.png)
+[![DE-deinflection](img/ss-de-deinflection-thumb.png)](img/ss-de-deinflection.png)
+[![AR](img/ss-ar-thumb.png)](img/ss-ar.png)
+[![SH-jezik](img/ss-sh-jezik-thumb.png)](img/ss-sh-jezik.png)
+[![EN-discombobulate](img/ss-en-discombobulate-thumb.png)](img/ss-en-discombobulate.png)
+[![Anki options](img/ss-anki2-thumb.png)](img/ss-anki2.png)
 
 ## Table of Contents
 
