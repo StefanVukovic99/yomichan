@@ -147,17 +147,17 @@ export type TermMetaFrequency = {
 };
 
 export type TermMetaPitch = {
+    mode: 'pitch';
     index: number;
     term: string;
-    mode: 'pitch';
     data: DictionaryData.TermMetaPitchData;
     dictionary: string;
 };
 
 export type TermMetaIPA = {
+    mode: 'ipa';
     index: number;
     term: string;
-    mode: 'ipa';
     data: DictionaryData.TermMetaIpaData;
     dictionary: string;
 };

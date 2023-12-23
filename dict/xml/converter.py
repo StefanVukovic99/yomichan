@@ -358,7 +358,7 @@ for dictionary in dicts:
                     'ipa',
                     {
                         'reading': term,
-                        'ipa': [
+                        'transcriptions': [
                             {
                                 'ipa': element.get_text(),
                                 'tags': [dialect] if dialect else []
@@ -441,6 +441,7 @@ for dictionary in dicts:
         title = f'yzkX-{dictionary["source"]}-ipa'
         
         indexObj['title'] = title
+        indexObj['format'] = 3
 
         with open(f'{outputPath}/index.json', 'w', encoding='utf-8') as file:
             json.dump(indexObj, file, indent=2)
