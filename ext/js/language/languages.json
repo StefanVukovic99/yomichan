@@ -15,5 +15,6 @@
     {"iso": "pt",  "i18n":false, "language": "Portuguese",     "flag": "🇧🇷🇵🇹", "exampleText": "ler"        },
     {"iso": "ru",  "i18n":false, "language": "Russian",        "flag": "🇷🇺",   "exampleText": "читать"     },
     {"iso": "sh",  "i18n":true,  "language": "Serbo-Croatian", "flag": "🇷🇸🇭🇷", "exampleText": "čitaše"     },
-    {"iso": "es",  "i18n":false, "language": "Spanish",        "flag": "🇪🇸",   "exampleText": "acabar de"  }
+    {"iso": "es",  "i18n":false, "language": "Spanish",        "flag": "🇪🇸",   "exampleText": "acabar de"  },
+    {"iso": "vi",  "i18n": false, "language": "Vietnamese",     "flag": "🇻🇳",   "exampleText": "đọc"       }
 ]
