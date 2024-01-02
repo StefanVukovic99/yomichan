@@ -2,6 +2,7 @@
     {"iso": "sq",  "i18n":false, "language": "Albanian",       "flag": "🇦🇱",   "exampleText": "ndihmojme"  },
     {"iso": "ar",  "i18n":false, "language": "Arabic",         "flag": "🇪🇬",   "exampleText":"قَرَأَ"         },
     {"iso": "grc", "i18n":false, "language": "Ancient Greek",  "flag": "🏺",   "exampleText": "γράφω"      },
+    {"iso": "zh",  "i18n": false, "language": "Chinese",        "flag": "🇨🇳",   "exampleText": "读"        },
     {"iso": "en",  "i18n":true,  "language": "English",        "flag": "🇺🇸🇬🇧", "exampleText": "don't read" },
     {"iso": "fr",  "i18n":false, "language": "French",         "flag": "🇫🇷",   "exampleText": "lire"       },
     {"iso": "de",  "i18n":false, "language": "German",         "flag": "🇩🇪",   "exampleText": "gelesen"    },
