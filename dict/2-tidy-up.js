@@ -202,7 +202,7 @@ lr.on('end', () => {
 
   console.log(`There were ${missingForms.toLocaleString()} missing forms that have now been automatically populated.`);
 
-  writeFileSync(`data/tidy/${source_iso}-${target_iso}lemmas.json`, JSON.stringify(lemmaDict));
+  writeFileSync(`data/tidy/${source_iso}-${target_iso}-lemmas.json`, JSON.stringify(lemmaDict));
   writeFileSync(`data/tidy/${source_iso}-${target_iso}-forms.json`, JSON.stringify(formDict));
 
 

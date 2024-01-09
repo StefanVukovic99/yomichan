@@ -324,21 +324,21 @@ for (const folder of folders) {
 
     writeFileSync(`${tempPath}/${folder}/index.json`, JSON.stringify({
         ...indexJson,
-        title: `${DICT_NAME}-${folder}-${source_iso}`
+        title: `${DICT_NAME}W-${source_iso}-${target_iso}` + (folder === 'dict' ? '' : '-ipa'),
     }));
 
     writeFileSync(`${tempPath}/${folder}/tag_bank_1.json`, JSON.stringify(Object.values(yzkTags[folder])));
 
     const filename = folder === 'dict' ? 'term_bank_' : 'term_meta_bank_';
 
-    writeInBatches(yzk[folder], `${folder}/${filename}`);
+    writeInBatches(yzk[folder], `${folder}/${filename}`, 20000);
 }
 
 console.log('total ipas', ipaCount, 'skipped ipa tags', Object.values(skippedIpaTags).reduce((a, b) => a + b, 0));
-writeFileSync(`data/language/${source_iso}/skippedIpaTags.json`, JSON.stringify(sortBreakdown(skippedIpaTags), null, 2));
+writeFileSync(`data/language/${source_iso}/${target_iso}/skippedIpaTags.json`, JSON.stringify(sortBreakdown(skippedIpaTags), null, 2));
 
 console.log('total term tags', termTagCount, 'skipped term tags', Object.values(skippedTermTags).reduce((a, b) => a + (parseInt(b) || 0), 0));
-writeFileSync(`data/language/${source_iso}/skippedTermTags.json`, JSON.stringify(sortBreakdown(skippedTermTags), null, 2));
+writeFileSync(`data/language/${source_iso}/${target_iso}/skippedTermTags.json`, JSON.stringify(sortBreakdown(skippedTermTags), null, 2));
 
 console.log('5-make-yezichak.js: Done!');
 
