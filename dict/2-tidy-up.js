@@ -205,7 +205,6 @@ lr.on('end', () => {
   writeFileSync(`data/tidy/${source_iso}-${target_iso}-lemmas.json`, JSON.stringify(lemmaDict));
   writeFileSync(`data/tidy/${source_iso}-${target_iso}-forms.json`, JSON.stringify(formDict));
 
-
   console.log('2-tidy-up.js finished.');
 });
 

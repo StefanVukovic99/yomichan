@@ -2,7 +2,6 @@ import json
 import fileinput
 import os
 
-
 output = []
 
 source_iso = os.environ.get("source_iso")
