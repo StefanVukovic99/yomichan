@@ -65,8 +65,8 @@ node 1-create-folders.js
 
 languages=$(jq '.' ../ext/js/language/languages.json)
 
-export source_language="$1"
-export target_language="$2"
+source_language="$1"
+target_language="$2"
 
 declare -a entries="($(
   jq -r '.[] | @json | @sh' ../ext/js/language/languages.json
@@ -80,6 +80,9 @@ for entry in "${entries[@]}"; do
       continue
   fi
 
+  export target_iso="$target_iso"
+  export target_language="$target_language_name"
+
   for entry in "${entries[@]}"; do
     iso=$(echo "${entry}" | jq -r '.iso')
     language=$(echo "${entry}" | jq -r '.language')
@@ -89,33 +92,54 @@ for entry in "${entries[@]}"; do
       continue
     fi
 
-    echo "------------------------------- $language -> $target_language -------------------------------"
-
-    export language="$language"
+    export source_language="$language"
     export source_iso="$iso"
 
-    #Serbo-Croatian, Ancient Greek and such cases
-    language_no_special_chars=$(echo "$language" | tr -d '[:space:]-')
-    filename="kaikki.org-dictionary-$language_no_special_chars.json"
-    
-    export filename
-
-    url="https://kaikki.org/dictionary/$language/$filename"
+    echo "------------------------------- $source_language -> $target_language -------------------------------"
 
     # Step 3: Download JSON data if it doesn't exist
-    if [ ! -f "data/kaikki/$filename" ] || [ "$redownload" = true ]; then
-      echo "Downloading $filename from $url"
-      wget "$url"
+    if [ "$target_language" = "English" ]; then
+      language_no_special_chars=$(echo "$language" | tr -d '[:space:]-') #Serbo-Croatian, Ancient Greek and such cases
+      filename="kaikki.org-dictionary-$language_no_special_chars.json"
+      filepath="data/kaikki/$filename"
       
-      mv $filename "data/kaikki/"
+
+      if [ ! -f "$filepath" ] || [ "$redownload" = true ]; then
+        url="https://kaikki.org/dictionary/$language/$filename"
+        echo "Downloading $filename from $url"
+        wget "$url" -O "$filepath"
+      else
+        echo "Kaikki dict already exists. Skipping download."
+      fi
     else
-      echo "Kaikki dict already exists. Skipping download."
+      filename="$target_iso-extract.json"
+      filepath="data/kaikki/$filename"
+
+      if [ ! -f "$filepath" ] || [ "$redownload" = true ]; then
+        url="https://kaikki.org/dictionary/downloads/$target_iso/$filename"
+        echo "Downloading $filename from $url"
+        wget "$url" -O "$filepath"
+      else
+        echo "Kaikki dict already exists. Skipping download."
+      fi
+
+      filename="$source_iso-$target_iso-extract.json"
+      filepath="data/kaikki/$filename"
+
+      if [ ! -f "$filepath" ]; then
+        echo "Extracting $filename"
+        python3 2-extract-language.py
+      else
+        echo "Extracted file already exists. Skipping extraction."
+      fi
     fi
+    export filename
+
 
     # Step 4: Run tidy-up.js if the tidy files don't exist
     if \
-      [ ! -f "data/tidy/$source_iso-forms.json" ] || \
-      [ ! -f "data/tidy/$source_iso-lemmas.json" ] || \
+      [ ! -f "data/tidy/$source_iso-$target_iso-forms.json" ] || \
+      [ ! -f "data/tidy/$source_iso-$target_iso-lemmas.json" ] || \
       [ "$force_tidy" = true ]; then
       echo "Tidying up $filename"
       node --max-old-space-size=4096 2-tidy-up.js
