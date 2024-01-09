@@ -15,18 +15,20 @@ fi
 
 # Parse flags
 source_all=false
+target_all=false
 redownload=false
 force_tidy=false
 force_freq=false
 force_yez=false
 force=false
 
-flags=('S' 'd' 't' 'f' 'y' 'F')
+flags=('S' 'T' 'd' 't' 'f' 'y' 'F')
 for flag in "${flags[@]}"; do
   case "$3" in 
     *"$flag"*) 
       case "$flag" in
         'S') source_all=true ;;
+        'T') target_all=true ;;
         'd') redownload=true ;;
         't') force_tidy=true ;;
         'f') force_freq=true ;;
@@ -48,6 +50,7 @@ if [ "$force_tidy" = true ] || [ "$force_freq" = true ]; then
 fi
 
 echo "[S] source_all: $source_all"
+echo "[T] target_all: $target_all"
 echo "[d] redownload: $redownload"
 echo "[F] force: $force"
 echo "[t] force_tidy: $force_tidy"
