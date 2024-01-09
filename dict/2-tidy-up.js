@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-const { writeFileSync } = require('fs');
+const { writeFileSync, unlinkSync, renameSync } = require('fs');
 
 const LineByLineReader = require('line-by-line');
 
@@ -49,16 +49,37 @@ let lineCount = 0;
 let printInterval = 1000;
 
 lr.on('line', (line) => {
-  lineCount += 1;
-  if (lineCount % printInterval === 0) {
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0); // Move the cursor to the beginning of the line
-    process.stdout.write(`Processed ${lineCount} lines...`);
-  }
-
   if (line) {
-    const { word, pos, senses, sounds = [], forms } = JSON.parse(line);
-    if(!word || !pos || !senses) return;
+    lineCount += 1;
+
+    if (lineCount % printInterval === 0) {
+      process.stdout.clearLine();
+      process.stdout.cursorTo(0); // Move the cursor to the beginning of the line
+      process.stdout.write(`Processed ${lineCount} lines...`);
+    }
+
+    const { word, pos, senses = [], sounds = [], forms } = JSON.parse(line);
+
+    console.log(word, pos);
+
+    lemmaDict[word] ??= [];
+    let currLemma = {};
+    let lineNumber = 0;
+
+    if(lemmaDict[word].includes(pos)){
+      const result = getWordFromFile(word, pos);
+      console.log("result", result);
+      const [fileWord, fileLine] = result;
+      currLemma = fileWord;
+      lineNumber = fileLine;
+    } else {
+      currLemma = {
+        'word': word,
+        'pos': pos,
+        'senses': [],
+      };
+      lemmaDict[word].push(pos);
+    }
 
     if (forms) {
       for (const { form, tags } of forms) {
@@ -86,6 +107,8 @@ lr.on('line', (line) => {
           tags: sound.tags || [],
         }
       })
+
+    currLemma['ipa'] = ipa;
     
     let nestedGlossObj = {};
 
@@ -100,11 +123,6 @@ lr.on('line', (line) => {
           formStuff.push([word, sense, pos]);
         } else {
           if (!JSON.stringify(glosses).includes('inflection of ')) {
-            lemmaDict[word] ??= {};
-            lemmaDict[word][pos] ??= {};
-
-            lemmaDict[word][pos].ipa ??= ipa;
-            lemmaDict[word][pos].senses ??= [];
 
             const currSense = {
               'glosses': [],
@@ -138,7 +156,7 @@ lr.on('line', (line) => {
             }
 
             if(currSense.glosses.length > 0){
-              lemmaDict[word][pos].senses.push(currSense);
+              currLemma.senses.push(currSense);
             }
           }
 
@@ -166,6 +184,23 @@ lr.on('line', (line) => {
       }
       senseIndex += 1;
     }
+
+    if(lineNumber){ 
+      const lr2 = new LineByLineReader(`data/tidy/${source_iso}-${target_iso}-lemmas.json`);
+      lr2.on('line', (line) => {
+        lineNumber--;
+
+        if(lineNumber !== 0){
+          //append line to new file
+          writeFileSync(`data/tidy/${source_iso}-${target_iso}-lemmas-temp.json`, line, {flag: 'a'});
+        }
+      });
+
+      unlinkSync(`data/tidy/${source_iso}-${target_iso}-lemmas.json`);
+      renameSync(`data/tidy/${source_iso}-${target_iso}-lemmas-temp.json`, `data/tidy/${source_iso}-${target_iso}-lemmas.json`);
+    }
+
+    writeFileSync(`data/tidy/${source_iso}-${target_iso}-lemmas.json`, JSON.stringify(currLemma) + '\n', {flag: 'a'});
   }
 });
 
@@ -214,7 +249,6 @@ lr.on('end', () => {
 
   console.log(`There were ${missingForms.toLocaleString()} missing forms that have now been automatically populated.`);
 
-  writeFileSync(`data/tidy/${source_iso}-${target_iso}-lemmas.json`, JSON.stringify(lemmaDict));
   writeFileSync(`data/tidy/${source_iso}-${target_iso}-forms.json`, JSON.stringify(formDict));
 
   console.log('2-tidy-up.js finished.');
@@ -251,4 +285,36 @@ function handleNest(nestedGlossObj, sense) {
       sense.glosses.push({ "type": "structured-content", "content": entry });
     }
   }
+}
+
+function getWordFromFile(word, pos) {
+  console.log("getWordFromFile", word, pos);
+  const filename = `data/tidy/${source_iso}-${target_iso}-lemmas.json`;
+  const lr2 = new LineByLineReader(filename);
+
+  let fileWord = null;
+  let lineNumber = 0;
+
+  console.log("getWordFromFile start");
+
+  lr2.on('error', (err) => {
+    console.log("getWordFromFile error", err);
+  });
+  
+  lr2.on('line', (line) => {
+    lineNumber++;
+    console.log("getWordFromFile line", lineNumber);
+    const { word: lineWord, pos: linePOS } = JSON.parse(line);
+    
+    if (lineWord === word && linePOS === pos) {
+      fileWord = lineWord;
+      console.log("closing");
+      lr2.close();
+    }
+  });
+
+  lr2.on('end', () => {
+    console.log("getWordFromFile end", fileWord, lineNumber);
+    return [fileWord, lineNumber]
+  });
 }
