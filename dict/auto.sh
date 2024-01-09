@@ -14,19 +14,19 @@ if [ -z "$1" ] || [ -z "$2" ]; then
 fi
 
 # Parse flags
-all_languages=false
+source_all=false
 redownload=false
 force_tidy=false
 force_freq=false
 force_yez=false
 force=false
 
-flags=('a' 'd' 't' 'f' 'y' 'F')
+flags=('S' 'd' 't' 'f' 'y' 'F')
 for flag in "${flags[@]}"; do
   case "$3" in 
     *"$flag"*) 
       case "$flag" in
-        'a') all_languages=true ;;
+        'S') source_all=true ;;
         'd') redownload=true ;;
         't') force_tidy=true ;;
         'f') force_freq=true ;;
@@ -47,7 +47,7 @@ if [ "$force_tidy" = true ] || [ "$force_freq" = true ]; then
   force_yez=true
 fi
 
-echo "[a] all_languages: $all_languages"
+echo "[S] source_all: $source_all"
 echo "[d] redownload: $redownload"
 echo "[F] force: $force"
 echo "[t] force_tidy: $force_tidy"
@@ -76,7 +76,7 @@ for entry in "${entries[@]}"; do
   language=$(echo "${entry}" | jq -r '.language')
   flag=$(echo "${entry}" | jq -r '.flag')
   
-  if [ "$language" != "$source_language" ] && [ "$all_languages" = false ]; then
+  if [ "$language" != "$source_language" ] && [ "$source_all" = false ]; then
     continue
   fi
 
