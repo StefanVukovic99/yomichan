@@ -86,6 +86,11 @@ lr.on('line', (line) => {
           tags: sound.tags || [],
         }
       })
+
+    if(word === "akull") {
+      console.log(sounds);
+      console.log(ipa);
+    }
     
     let nestedGlossObj = {};
 

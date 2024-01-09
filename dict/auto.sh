@@ -135,7 +135,7 @@ for entry in "${entries[@]}"; do
         echo "Extracted file already exists. Skipping extraction."
       fi
     fi
-    export filename
+    export kaikki_file="$filename"
 
 
     # Step 4: Run tidy-up.js if the tidy files don't exist
@@ -144,7 +144,7 @@ for entry in "${entries[@]}"; do
       [ ! -f "data/tidy/$source_iso-$target_iso-lemmas.json" ] || \
       [ "$force_tidy" = true ]; then
       echo "Tidying up $filename"
-      node --max-old-space-size=4096 2-tidy-up.js
+      python3 2-tidy-up.py
     else
       echo "Tidy file already exists. Skipping tidying."
     fi
@@ -183,7 +183,7 @@ for entry in "${entries[@]}"; do
       [ ! -f "data/language/$source_iso/$target_iso/$ipa_file" ] || \
       [ "$force_yez" = true ]; then
       echo "Creating Yezichak dict and IPA files"
-      if node --max-old-space-size=4096 5-make-yezichak.js; then
+      if node --max-old-space-size=8192 5-make-yezichak.js; then
         zip -j "$dict_file" data/temp/dict/index.json data/temp/dict/tag_bank_1.json data/temp/dict/term_bank_*.json
         zip -j "$ipa_file" data/temp/ipa/index.json data/temp/ipa/tag_bank_1.json data/temp/ipa/term_meta_bank_*.json
       else

@@ -1,6 +1,9 @@
 import json
-from collections import defaultdict
-from pprint import pprint
+import os
+
+source_iso = os.environ.get("source_iso")
+target_iso = os.environ.get("target_iso")
+kaikki_file = os.environ.get("kaikki_file")
 
 def handle_level(nest, level):
     nest_defs = []
@@ -46,8 +49,6 @@ blacklisted_tags = [
     'used-in-the-form'
 ]
 
-unique_tags = []
-
 line_count = 0
 print_interval = 1000
 
@@ -56,7 +57,7 @@ form_dict = {}
 form_stuff = []
 automated_forms = {}
 
-with open('data/kaikki/filename') as file:
+with open(f'data/kaikki/{kaikki_file}') as file:
     for line in file:
         line_count += 1
         if line_count % print_interval == 0:
@@ -73,18 +74,19 @@ with open('data/kaikki/filename') as file:
                 for form_data in forms:
                     form, tags = form_data.get('form'), form_data.get('tags')
 
-                    if form and tags and not any(value in tags for value in blacklisted_tags):
-                        for tag in tags:
-                            if tag not in unique_tags:
-                                unique_tags.append(tag)
-                        
+                    if form and tags  and not any(value in tags for value in blacklisted_tags):
                         automated_forms[form] = automated_forms.get(form, {})
                         automated_forms[form][word] = automated_forms[form].get(word, {})
                         automated_forms[form][word][pos] = automated_forms[form][word].get(pos, [])
                         
-                        automated_forms[form][word][pos].append(' '.join(unique_tags))
+                        automated_forms[form][word][pos].append(' '.join(tags))
 
+            
             ipa = [{'ipa': sound['ipa'], 'tags': sound.get('tags', [])} for sound in sounds if sound and sound.get('ipa')]
+
+            if(word == 'akull'):
+                print(sounds)
+                print(ipa)
 
             nested_gloss_obj = {}
             sense_index = 0
@@ -101,8 +103,12 @@ with open('data/kaikki/filename') as file:
                         if 'inflection of ' not in json.dumps(glosses):
                             lemma_dict[word] = lemma_dict.get(word, {})
                             lemma_dict[word][pos] = lemma_dict[word].get(pos, {})
-                            lemma_dict[word][pos]['ipa'] = ipa
-                            lemma_dict[word][pos]['senses'] = []
+                            lemma_dict[word][pos]['ipa'] = lemma_dict[word][pos].get('ipa', [])
+                            for ipa_obj in ipa:
+                                if ipa_obj['ipa'] not in [obj['ipa'] for obj in lemma_dict[word][pos]['ipa']]:
+                                    lemma_dict[word][pos]['ipa'].append(ipa_obj)
+
+                            lemma_dict[word][pos]['senses'] = lemma_dict[word][pos].get('senses', [])
 
                             curr_sense = {'glosses': [], 'tags': tags}
 
@@ -116,6 +122,10 @@ with open('data/kaikki/filename') as file:
                                     handle_nest(nested_gloss_obj, curr_sense)
                                     nested_gloss_obj = {}
                             elif len(glosses) == 1:
+                                if nested_gloss_obj:
+                                    handle_nest(nested_gloss_obj, curr_sense)
+                                    nested_gloss_obj = {}
+                                    
                                 gloss = glosses[0]
 
                                 if gloss not in json.dumps(curr_sense['glosses']):
@@ -125,11 +135,23 @@ with open('data/kaikki/filename') as file:
                                 lemma_dict[word][pos]['senses'].append(curr_sense)
 
                         if 'inflection of ' in json.dumps(glosses):
-                            lemma = sense['glosses'][0].replace('.+(?=inflection of)', '').replace(' \\(.+?\\)', '').replace(':$', '').replace(':\\n.+', '').replace('inflection of ', '').replace(':.+', '').strip()
+                            lemma = sense['glosses'][0]\
+                                .replace('.+(?=inflection of)', '')\
+                                .replace(' \\(.+?\\)', '')\
+                                .replace(':$', '')\
+                                .replace(':\\n.+', '')\
+                                .replace('inflection of ', '')\
+                                .replace(':.+', '')\
+                                .strip()
                             inflection = sense['glosses'][1]
 
                             if inflection and 'inflection of ' not in inflection and word != lemma:
+                                form_dict[word] = form_dict.get(word, {})
+                                form_dict[word][lemma] = form_dict[word].get(lemma, {})
+                                form_dict[word][lemma][pos] = form_dict[word][lemma].get(pos, [])
+
                                 form_dict[word][lemma][pos].append(inflection)
+                                print(f"Added {word} as an inflection of {lemma}.")
 
                 sense_index += 1
 
@@ -137,11 +159,15 @@ print(f"Processed {line_count} lines...")
 
 for form, info, pos in form_stuff:
     glosses = info['glosses']
-    form_of = info['form_of'][0]['word']
+    form_of = info['form_of']
     lemma = form_of[0]['word']
 
     if form != lemma:
-        form_dict[form][lemma][pos].append(glosses[0] if not glosses[0].includes('##') else glosses[1])
+        form_dict[form] = form_dict.get(form, {})
+        form_dict[form][lemma] = form_dict[form].get(lemma, {})
+        form_dict[form][lemma][pos] = form_dict[form][lemma].get(pos, [])
+
+        form_dict[form][lemma][pos].append(glosses[0] if not '##' in glosses[0] else glosses[1])
 
 missing_forms = 0
 
@@ -153,14 +179,18 @@ for form, info in automated_forms.items():
             for lemma, parts in info.items():
                 for pos, glosses in parts.items():
                     if form != lemma:
+                        form_dict[form] = form_dict.get(form, {})
+                        form_dict[form][lemma] = form_dict[form].get(lemma, {})
+                        form_dict[form][lemma][pos] = form_dict[form][lemma].get(pos, [])
+
                         form_dict[form][lemma][pos].extend([f"-automated- {gloss}" for gloss in glosses])
 
 print(f"There were {missing_forms} missing forms that have now been automatically populated.")
 
-with open(f"data/tidy/source_iso-target_iso-lemmas.json", "w") as f:
+with open(f"data/tidy/{source_iso}-{target_iso}-lemmas.json", "w") as f:
     json.dump(lemma_dict, f)
 
-with open(f"data/tidy/source_iso-target_iso-forms.json", "w") as f:
+with open(f"data/tidy/{source_iso}-{target_iso}-forms.json", "w") as f:
     json.dump(form_dict, f)
 
 print('2-tidy-up.py finished.')
