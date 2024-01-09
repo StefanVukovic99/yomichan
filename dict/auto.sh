@@ -92,7 +92,7 @@ for entry in "${entries[@]}"; do
     echo "------------------------------- $language -> $target_language -------------------------------"
 
     export language="$language"
-    export language_short="$iso"
+    export source_iso="$iso"
 
     #Serbo-Croatian, Ancient Greek and such cases
     language_no_special_chars=$(echo "$language" | tr -d '[:space:]-')
@@ -114,8 +114,8 @@ for entry in "${entries[@]}"; do
 
     # Step 4: Run tidy-up.js if the tidy files don't exist
     if \
-      [ ! -f "data/tidy/$language_short-forms.json" ] || \
-      [ ! -f "data/tidy/$language_short-lemmas.json" ] || \
+      [ ! -f "data/tidy/$source_iso-forms.json" ] || \
+      [ ! -f "data/tidy/$source_iso-lemmas.json" ] || \
       [ "$force_tidy" = true ]; then
       echo "Tidying up $filename"
       node --max-old-space-size=4096 2-tidy-up.js
@@ -125,7 +125,7 @@ for entry in "${entries[@]}"; do
 
     # Step 5 (optional): Create an array of sentences
     if \
-      [ ! -f "data/sentences/$language_short-sentences.json" ] || \
+      [ ! -f "data/sentences/$source_iso-sentences.json" ] || \
       [ "$force_freq" = true ]; then
       if [ -d "$OPENSUBS_PATH" ]; then
         echo "Creating sentences file"
@@ -139,7 +139,7 @@ for entry in "${entries[@]}"; do
 
     # Step 6: Create a frequency list
     if \
-      [ ! -f "data/freq/$language_short-freq.json" ] || \
+      [ ! -f "data/freq/$source_iso-freq.json" ] || \
       [ "$force_freq" = true ]; then
       echo "Creating frequency file"
       node 4-create-freq.js
@@ -147,14 +147,14 @@ for entry in "${entries[@]}"; do
       echo "Freq file already exists. Skipping freq creation."
     fi
 
-    dict_file="$DICT_NAME-dict-$language_short.zip"
-    ipa_file="$DICT_NAME-ipa-$language_short.zip"
-    freq_file="$DICT_NAME-freq-$language_short.zip"
+    dict_file="$DICT_NAME-dict-$source_iso.zip"
+    ipa_file="$DICT_NAME-ipa-$source_iso.zip"
+    freq_file="$DICT_NAME-freq-$source_iso.zip"
 
     # Step 7: Create Yezichak files
     if \
-      [ ! -f "data/language/$language_short/$dict_file" ] || \
-      [ ! -f "data/language/$language_short/$ipa_file" ] || \
+      [ ! -f "data/language/$source_iso/$dict_file" ] || \
+      [ ! -f "data/language/$source_iso/$ipa_file" ] || \
       [ "$force_yez" = true ]; then
       echo "Creating Yezichak dict and IPA files"
       if node --max-old-space-size=4096 5-make-yezichak.js; then
@@ -169,7 +169,7 @@ for entry in "${entries[@]}"; do
 
     # Step 8: Convert frequency list to rank-based Yezichak format
     if \
-      [ ! -f "data/language/$language_short/$freq_file" ] || \
+      [ ! -f "data/language/$source_iso/$freq_file" ] || \
       [ "$force_yez" = true ]; then
       echo "Creating Yezichak freq files"
       if python3 6-freq-to-rank.py; then
@@ -182,15 +182,15 @@ for entry in "${entries[@]}"; do
     fi
 
     if [ -f "$dict_file" ]; then
-      mv "$dict_file" "data/language/$language_short/"
+      mv "$dict_file" "data/language/$source_iso/"
     fi
 
     if [ -f "$ipa_file" ]; then
-      mv "$ipa_file" "data/language/$language_short/"
+      mv "$ipa_file" "data/language/$source_iso/"
     fi
 
     if [ -f "$freq_file" ]; then
-      mv "$freq_file" "data/language/$language_short/"
+      mv "$freq_file" "data/language/$source_iso/"
     fi
 
     echo "----------------------------------------------------------------------------------"

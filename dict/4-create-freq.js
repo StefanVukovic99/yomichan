@@ -18,7 +18,7 @@ const {readFileSync, writeFileSync, existsSync} = require('fs');
 
 const maxSentences = parseInt(process.env.MAX_SENTENCES);
 
-const lang_short = process.env.language_short;
+const lang_short = process.env.source_iso;
 
 const lemmaDict = JSON.parse(readFileSync(`data/tidy/${lang_short}-lemmas.json`));
 const formDict = JSON.parse(readFileSync(`data/tidy/${lang_short}-forms.json`));

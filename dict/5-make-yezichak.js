@@ -19,16 +19,16 @@ const {readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, createWr
 const date = require('date-and-time');
 const now = new Date();
 
-const {language_short, DEBUG_WORD, DICT_NAME} = process.env;
+const {source_iso, DEBUG_WORD, DICT_NAME} = process.env;
 
 const currentDate = date.format(now, 'YYYY.MM.DD');
 
-const lemmaDict = JSON.parse(readFileSync(`data/tidy/${language_short}-lemmas.json`));
-const formDict = JSON.parse(readFileSync(`data/tidy/${language_short}-forms.json`));
+const lemmaDict = JSON.parse(readFileSync(`data/tidy/${source_iso}-lemmas.json`));
+const formDict = JSON.parse(readFileSync(`data/tidy/${source_iso}-forms.json`));
 
 // make folder if doesn't exist
-if (!existsSync(`data/language/${language_short}`)) {
-    mkdirSync(`data/language/${language_short}`, {recursive: true});
+if (!existsSync(`data/language/${source_iso}`)) {
+    mkdirSync(`data/language/${source_iso}`, {recursive: true});
 }
 
 function loadJson(file) {
@@ -36,11 +36,11 @@ function loadJson(file) {
 }
 
 const commonTermTags = loadJson('data/language/tag_bank_term.json');
-const languageTermTags = loadJson(`data/language/${language_short}/tag_bank_term.json`);
+const languageTermTags = loadJson(`data/language/${source_iso}/tag_bank_term.json`);
 const termTags = [...commonTermTags, ...languageTermTags];
 
 const commonIpaTags = loadJson('data/language/tag_bank_ipa.json');
-const languageIpaTags = loadJson(`data/language/${language_short}/tag_bank_ipa.json`);
+const languageIpaTags = loadJson(`data/language/${source_iso}/tag_bank_ipa.json`);
 const ipaTags = [...commonIpaTags, ...languageIpaTags];
 
 const tagModifiers = [
@@ -325,7 +325,7 @@ for (const folder of folders) {
 
     writeFileSync(`${tempPath}/${folder}/index.json`, JSON.stringify({
         ...indexJson,
-        title: `${DICT_NAME}-${folder}-${language_short}`
+        title: `${DICT_NAME}-${folder}-${source_iso}`
     }));
 
     writeFileSync(`${tempPath}/${folder}/tag_bank_1.json`, JSON.stringify(Object.values(yzkTags[folder])));
@@ -336,10 +336,10 @@ for (const folder of folders) {
 }
 
 console.log('total ipas', ipaCount, 'skipped ipa tags', Object.values(skippedIpaTags).reduce((a, b) => a + b, 0));
-writeFileSync(`data/language/${language_short}/skippedIpaTags.json`, JSON.stringify(sortBreakdown(skippedIpaTags), null, 2));
+writeFileSync(`data/language/${source_iso}/skippedIpaTags.json`, JSON.stringify(sortBreakdown(skippedIpaTags), null, 2));
 
 console.log('total term tags', termTagCount, 'skipped term tags', Object.values(skippedTermTags).reduce((a, b) => a + (parseInt(b) || 0), 0));
-writeFileSync(`data/language/${language_short}/skippedTermTags.json`, JSON.stringify(sortBreakdown(skippedTermTags), null, 2));
+writeFileSync(`data/language/${source_iso}/skippedTermTags.json`, JSON.stringify(sortBreakdown(skippedTermTags), null, 2));
 
 console.log('5-make-yezichak.js: Done!');
 
@@ -369,7 +369,7 @@ function incrementCounter(key, counter) {
 }
 
 function normalizeOrthography(term) {
-    switch (language_short) {
+    switch (source_iso) {
         case 'ar':
             return term
                 .replace(/[\u064E-\u0650]/g, '');
