@@ -177,8 +177,8 @@ for entry in "${entries[@]}"; do
 
     # Step 7: Create Yezichak files
     if \
-      [ ! -f "data/language/$source_iso/$dict_file" ] || \
-      [ ! -f "data/language/$source_iso/$ipa_file" ] || \
+      [ ! -f "data/language/$source_iso/$target_iso/$dict_file" ] || \
+      [ ! -f "data/language/$source_iso/$target_iso/$ipa_file" ] || \
       [ "$force_yez" = true ]; then
       echo "Creating Yezichak dict and IPA files"
       if node --max-old-space-size=4096 5-make-yezichak.js; then
@@ -206,15 +206,15 @@ for entry in "${entries[@]}"; do
     fi
 
     if [ -f "$dict_file" ]; then
-      mv "$dict_file" "data/language/$source_iso/"
+      mv "$dict_file" "data/language/$source_iso/$target_iso/"
     fi
 
     if [ -f "$ipa_file" ]; then
-      mv "$ipa_file" "data/language/$source_iso/"
+      mv "$ipa_file" "data/language/$source_iso/$target_iso/"
     fi
 
     if [ -f "$freq_file" ]; then
-      mv "$freq_file" "data/language/$source_iso/"
+      mv "$freq_file" "data/language/$target_iso/"
     fi
 
     echo "----------------------------------------------------------------------------------"
