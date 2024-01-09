@@ -45,7 +45,17 @@ const blacklistedTags = [
 
 const uniqueTags = [];
 
+let lineCount = 0;
+let printInterval = 1000;
+
 lr.on('line', (line) => {
+  lineCount += 1;
+  if (lineCount % printInterval === 0) {
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0); // Move the cursor to the beginning of the line
+    process.stdout.write(`Processed ${lineCount} lines...`);
+  }
+
   if (line) {
     const { word, pos, senses, sounds = [], forms } = JSON.parse(line);
     if(!word || !pos || !senses) return;
@@ -160,6 +170,8 @@ lr.on('line', (line) => {
 });
 
 lr.on('end', () => {
+  console.log(`Processed ${lineCount} lines...`);
+
   for (const [form, info, pos] of formStuff) {
     const { glosses, form_of } = info;
     const lemma = form_of[0].word;

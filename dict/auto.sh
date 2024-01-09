@@ -116,9 +116,11 @@ for entry in "${entries[@]}"; do
       filepath="data/kaikki/$filename"
 
       if [ ! -f "$filepath" ] || [ "$redownload" = true ]; then
-        url="https://kaikki.org/dictionary/downloads/$target_iso/$filename"
+        url="https://kaikki.org/dictionary/downloads/$target_iso/$filename.gz"
         echo "Downloading $filename from $url"
-        wget "$url" -O "$filepath"
+        wget "$url" -O "$filepath".gz
+        echo "Extracting $filename"
+        gunzip "$filepath".gz  # Use 'gunzip' to extract the compressed file
       else
         echo "Kaikki dict already exists. Skipping download."
       fi

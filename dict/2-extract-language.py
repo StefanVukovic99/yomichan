@@ -1,39 +1,39 @@
 import json
-import fileinput
 import os
 
-output = []
-
 source_iso = os.environ.get("source_iso")
-source_language = os.environ.get("source_language")
 target_iso = os.environ.get("target_iso")
 
-line_count = 0  # Initialize a line counter
-print_interval = 1000  # Set the interval for progress updates
+input_file = f"data/kaikki/{source_iso}-extract.json"
+output_file = f"data/kaikki/{source_iso}-{target_iso}-extract.json"
 
-inputFile = f"data/kaikki/{source_iso}-extract.json"
-print(f"Reading {inputFile}...")
+print(f"Reading {input_file} and writing {output_file}...")
 
-for line in fileinput.input(inputFile, openhook=fileinput.hook_encoded("utf-8")):
-    object = json.loads(line)
-    if("lang_code" not in object):
-        if("redirect" not in object):
-            print(f"Error: no lang_code or redirect in line {line_count}.", object)
-        continue
-    if object["lang_code"] == source_iso:
-        output.append(line.strip())
+with open(input_file, "r", encoding="utf-8") as input_file, \
+     open(output_file, "w", encoding="utf-8") as output_file:
 
-    line_count += 1  # Increment the line counter
+    line_count = 0
+    print_interval = 1000
 
-    # Print progress at the specified interval
-    if line_count % print_interval == 0:
-        print(f"Processed {line_count} lines...", end="\r")
+    for line in input_file:
+        line_count += 1
 
-print("Finished reading raw-wiktextract-data.json.")
+        try:
+            obj = json.loads(line.strip())
+        except json.JSONDecodeError:
+            print(f"Error decoding JSON in line {line_count}. Skipping...")
+            continue
 
-print(f"Writing {source_iso}-{target_iso}-extract.json...", len(output))
+        if "lang_code" not in obj:
+            if "redirect" not in obj:
+                print(f"Error: no lang_code or redirect in line {line_count}.", obj)
+            continue
 
-with open(f"data/kaikki/{source_iso}-{target_iso}-extract.json", "w", encoding="utf-8") as f:
-    f.write("\n".join(output))
+        if obj["lang_code"] == source_iso:
+            output_file.write(line)
 
-print("Finished.")
+        # Print progress at the specified interval
+        if line_count % print_interval == 0:
+            print(f"Processed {line_count} lines...", end="\r")
+
+print("\nFinished.")
