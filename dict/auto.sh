@@ -7,10 +7,9 @@ export DEBUG_WORD
 export OPENSUBS_PATH
 export DICT_NAME
 
-
-# Check for the language and language_short arguments
-if [ -z "$1" ]; then
-  echo "Usage: $0 <language> [flags]"
+# Check for the source_language and target_language arguments
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo "Usage: $0 <source_language> <target_language> [flags]"
   exit 1
 fi
 
@@ -24,7 +23,7 @@ force=false
 
 flags=('a' 'd' 't' 'f' 'y' 'F')
 for flag in "${flags[@]}"; do
-  case "$2" in 
+  case "$3" in 
     *"$flag"*) 
       case "$flag" in
         'a') all_languages=true ;;
@@ -58,12 +57,13 @@ echo "[y] force_yez: $force_yez"
 # Step 1: Install dependencies
 npm i
 
-# Step 2: Run create-folder.js with the language argument
+# Step 2: Run create-folder.js
 node 1-create-folders.js
 
 languages=$(jq '.' ../ext/js/language/languages.json)
 
-export lang="$1"
+export source_language="$1"
+export target_language="$2"
 
 declare -a entries="($(
   jq -r '.[] | @json | @sh' ../ext/js/language/languages.json
@@ -76,7 +76,7 @@ for entry in "${entries[@]}"; do
   language=$(echo "${entry}" | jq -r '.language')
   flag=$(echo "${entry}" | jq -r '.flag')
   
-  if [ "$language" != "$lang" ] && [ "$all_languages" = false ]; then
+  if [ "$language" != "$source_language" ] && [ "$all_languages" = false ]; then
     continue
   fi
 
