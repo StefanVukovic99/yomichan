@@ -143,7 +143,8 @@ with open(f'data/kaikki/{kaikki_file}') as file:
                                 .replace('inflection of ', '')\
                                 .replace(':.+', '')\
                                 .strip()
-                            inflection = sense['glosses'][1]
+                            
+                            inflection = sense['glosses'][1] if len(sense['glosses']) > 1 else ''
 
                             if inflection and 'inflection of ' not in inflection and word != lemma:
                                 form_dict[word] = form_dict.get(word, {})
@@ -151,8 +152,6 @@ with open(f'data/kaikki/{kaikki_file}') as file:
                                 form_dict[word][lemma][pos] = form_dict[word][lemma].get(pos, [])
 
                                 form_dict[word][lemma][pos].append(inflection)
-                                print(f"Added {word} as an inflection of {lemma}.")
-
                 sense_index += 1
 
 print(f"Processed {line_count} lines...")

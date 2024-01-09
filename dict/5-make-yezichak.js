@@ -282,6 +282,10 @@ for (const [form, allInfo] of Object.entries(formDict)) {
                     hypotheses = hypotheses.map((hypothesis) => hypothesis.split(' '));
                 }
 
+                if(target_iso === 'fr'){
+                    hypotheses = hypotheses.map((hypothesis) => hypothesis.filter(inflection => !inflection.trim().startsWith('Voir la conjugaison')));
+                }
+
                 hypotheses = hypotheses
                     .map((hypothesis) => 
                         hypothesis
@@ -302,18 +306,20 @@ for (const [form, allInfo] of Object.entries(formDict)) {
                 }
             }
 
-            yzk.form.push([
-                normalizeOrthography(form),
-                '',
-                'non-lemma',
-                '',
-                0,
-                [''],
-                0,
-                '',
-                normalizeOrthography(lemma),
-                uniqueHypotheses
-            ]);
+            if(uniqueHypotheses.length){
+                yzk.form.push([
+                    normalizeOrthography(form),
+                    '',
+                    'non-lemma',
+                    '',
+                    0,
+                    [''],
+                    0,
+                    '',
+                    normalizeOrthography(lemma),
+                    uniqueHypotheses
+                ]);
+            }
         }
     }
 }
