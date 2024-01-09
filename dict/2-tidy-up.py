@@ -51,10 +51,10 @@ unique_tags = []
 line_count = 0
 print_interval = 1000
 
-lemma_dict = defaultdict(lambda: defaultdict(dict))
-form_dict = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+lemma_dict = {}
+form_dict = {}
 form_stuff = []
-automated_forms = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+automated_forms = {}
 
 with open('data/kaikki/filename') as file:
     for line in file:
@@ -77,8 +77,12 @@ with open('data/kaikki/filename') as file:
                         for tag in tags:
                             if tag not in unique_tags:
                                 unique_tags.append(tag)
-
-                        automated_forms[form][word][pos].extend(tags)
+                        
+                        automated_forms[form] = automated_forms.get(form, {})
+                        automated_forms[form][word] = automated_forms[form].get(word, {})
+                        automated_forms[form][word][pos] = automated_forms[form][word].get(pos, [])
+                        
+                        automated_forms[form][word][pos].append(' '.join(unique_tags))
 
             ipa = [{'ipa': sound['ipa'], 'tags': sound.get('tags', [])} for sound in sounds if sound and sound.get('ipa')]
 
@@ -86,17 +90,17 @@ with open('data/kaikki/filename') as file:
             sense_index = 0
 
             for sense in senses:
-                raw_glosses = sense.get('raw_glosses') or sense.get('glosses')
+                glosses = sense.get('raw_glosses') or sense.get('glosses')
                 form_of = sense.get('form_of')
                 tags = sense.get('tags', [])
 
-                glosses = raw_glosses or sense.get('glosses')
-
-                if glosses and len(glosses) > 0:
+                if glosses:
                     if form_of:
                         form_stuff.append([word, sense, pos])
                     else:
                         if 'inflection of ' not in json.dumps(glosses):
+                            lemma_dict[word] = lemma_dict.get(word, {})
+                            lemma_dict[word][pos] = lemma_dict[word].get(pos, {})
                             lemma_dict[word][pos]['ipa'] = ipa
                             lemma_dict[word][pos]['senses'] = []
 
