@@ -19,16 +19,15 @@ const {readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync, createWr
 const date = require('date-and-time');
 const now = new Date();
 
-const {source_iso, DEBUG_WORD, DICT_NAME} = process.env;
+const {source_iso, target_iso, DEBUG_WORD, DICT_NAME} = process.env;
 
 const currentDate = date.format(now, 'YYYY.MM.DD');
 
-const lemmaDict = JSON.parse(readFileSync(`data/tidy/${source_iso}-lemmas.json`));
-const formDict = JSON.parse(readFileSync(`data/tidy/${source_iso}-forms.json`));
+const lemmaDict = JSON.parse(readFileSync(`data/tidy/${source_iso}-${target_iso}-lemmas.json`));
+const formDict = JSON.parse(readFileSync(`data/tidy/${source_iso}-${target_iso}-forms.json`));
 
-// make folder if doesn't exist
-if (!existsSync(`data/language/${source_iso}`)) {
-    mkdirSync(`data/language/${source_iso}`, {recursive: true});
+if (!existsSync(`data/language/${source_iso}/${target_iso}`)) {
+    mkdirSync(`data/language/${source_iso}/${target_iso}`, {recursive: true});
 }
 
 function loadJson(file) {
@@ -36,11 +35,11 @@ function loadJson(file) {
 }
 
 const commonTermTags = loadJson('data/language/tag_bank_term.json');
-const languageTermTags = loadJson(`data/language/${source_iso}/tag_bank_term.json`);
+const languageTermTags = loadJson(`data/language/${source_iso}/${target_iso}/tag_bank_term.json`);
 const termTags = [...commonTermTags, ...languageTermTags];
 
 const commonIpaTags = loadJson('data/language/tag_bank_ipa.json');
-const languageIpaTags = loadJson(`data/language/${source_iso}/tag_bank_ipa.json`);
+const languageIpaTags = loadJson(`data/language/${source_iso}/${target_iso}/tag_bank_ipa.json`);
 const ipaTags = [...commonIpaTags, ...languageIpaTags];
 
 const tagModifiers = [

@@ -18,7 +18,7 @@ const { writeFileSync } = require('fs');
 
 const LineByLineReader = require('line-by-line');
 
-const { source_iso, DEBUG_WORD, filename } = process.env;
+const { source_iso, target_iso, DEBUG_WORD, filename } = process.env;
 
 const lr = new LineByLineReader(`data/kaikki/${filename}`);
 
@@ -48,6 +48,7 @@ const uniqueTags = [];
 lr.on('line', (line) => {
   if (line) {
     const { word, pos, senses, sounds = [], forms } = JSON.parse(line);
+    if(!word || !pos || !senses) return;
 
     if (forms) {
       for (const { form, tags } of forms) {
@@ -201,8 +202,8 @@ lr.on('end', () => {
 
   console.log(`There were ${missingForms.toLocaleString()} missing forms that have now been automatically populated.`);
 
-  writeFileSync(`data/tidy/${source_iso}-lemmas.json`, JSON.stringify(lemmaDict));
-  writeFileSync(`data/tidy/${source_iso}-forms.json`, JSON.stringify(formDict));
+  writeFileSync(`data/tidy/${source_iso}-${target_iso}lemmas.json`, JSON.stringify(lemmaDict));
+  writeFileSync(`data/tidy/${source_iso}-${target_iso}-forms.json`, JSON.stringify(formDict));
 
 
   console.log('2-tidy-up.js finished.');
