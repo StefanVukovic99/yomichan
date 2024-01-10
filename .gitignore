@@ -4,3 +4,5 @@ builds/
 ext.pem
 ext.crx
 notes/
+ext/lib
+dict/*/*.png
