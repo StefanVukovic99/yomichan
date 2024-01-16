@@ -20,5 +20,6 @@
     {"iso": "sh",  "i18n":true,  "language": "Serbo-Croatian", "flag": "🇷🇸🇭🇷", "exampleText": "čitaše"     },
     {"iso": "sv",  "i18n":false, "language": "Swedish",        "flag": "🇸🇪",   "exampleText": "läsa"       },
     {"iso": "es",  "i18n":false, "language": "Spanish",        "flag": "🇪🇸",   "exampleText": "acabar de"  },
+    {"iso": "th",  "i18n":false, "language": "Thai",           "flag": "🇹🇭",   "exampleText": "อ่าน"        },
     {"iso": "vi",  "i18n":false, "language": "Vietnamese",     "flag": "🇻🇳",   "exampleText": "đọc"        }
 ]
