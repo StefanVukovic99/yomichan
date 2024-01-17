@@ -117,5 +117,11 @@
         "popup.html",
         "template-renderer.html"
     ],
-    "content_security_policy": "default-src 'self'; img-src blob: 'self'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *"
+    "content_security_policy": "default-src 'self'; img-src blob: 'self'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "alex@foosoft.net",
+            "strict_min_version": "57.0"
+        }
+    }
 }
