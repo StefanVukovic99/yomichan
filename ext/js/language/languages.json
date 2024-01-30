@@ -16,6 +16,7 @@
     {"iso": "fa",  "i18n":false, "language": "Persian",        "flag": "🇮🇷",   "exampleText": "خواندن"     },
     {"iso": "pl",  "i18n":false, "language": "Polish",         "flag": "🇵🇱",   "exampleText": "czytacie"   },
     {"iso": "pt",  "i18n":false, "language": "Portuguese",     "flag": "🇧🇷🇵🇹", "exampleText": "ler"        },
+    {"iso": "ro",  "i18n":false, "language": "Romanian",       "flag": "🇷🇴",   "exampleText": "citit"      },
     {"iso": "ru",  "i18n":false, "language": "Russian",        "flag": "🇷🇺",   "exampleText": "читать"     },
     {"iso": "sh",  "i18n":true,  "language": "Serbo-Croatian", "flag": "🇷🇸🇭🇷", "exampleText": "čitaše"     },
     {"iso": "sv",  "i18n":false, "language": "Swedish",        "flag": "🇸🇪",   "exampleText": "läsa"       },

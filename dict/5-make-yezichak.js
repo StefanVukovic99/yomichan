@@ -143,7 +143,7 @@ for (const [lemma, infoMap] of Object.entries(lemmaDict)) {
                 function addGlossToEntries(joinedTags) {
                     if (entries[joinedTags]) {
                         entries[joinedTags][5].push(gloss);
-                    } else {
+                    } else if (gloss) {
                         entries[joinedTags] = [
                             normalizedLemma, // term
                             normalizedLemma, // reading
