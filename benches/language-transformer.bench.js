@@ -103,8 +103,9 @@ describe('Language transformer basic tests', () => {
     });
 });
 
+const languageTransformer2 = new LanguageTransformer();
 describe('addDescriptor', () => {
     bench('addDescriptor', () => {
-        languageTransformer.addDescriptor(descriptor);
+        languageTransformer2.addDescriptor(descriptor);
     });
 });
