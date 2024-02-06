@@ -141,8 +141,13 @@ export class LanguageTransformer {
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
                     const {suffixIn, suffixOut, conditionsIn, conditionsOut} = rule;
-                    if (!LanguageTransformer.conditionsMatch(conditions, conditionsIn)) { continue; }
-                    if (!text.endsWith(suffixIn) || (text.length - suffixIn.length + suffixOut.length) <= 0) { continue; }
+                    if (
+                        !LanguageTransformer.conditionsMatch(conditions, conditionsIn) ||
+                        !text.endsWith(suffixIn) ||
+                        (text.length - suffixIn.length + suffixOut.length) <= 0
+                    ) {
+                        continue;
+                    }
                     results.push(this._createTransformedText(
                         text.substring(0, text.length - suffixIn.length) + suffixOut,
                         conditionsOut,
