@@ -146,16 +146,15 @@ export class LanguageTransformer {
 
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
-                    if (!LanguageTransformer.conditionsMatch(conditions, rule.conditionsIn)) { continue; }
-                    const {suffixIn, suffixOut} = rule;
                     if (
-                        !text.endsWith(suffixIn) ||
-                        (text.length - suffixIn.length + suffixOut.length) <= 0
+                        !text.endsWith(rule.suffixIn) ||
+                        !LanguageTransformer.conditionsMatch(conditions, rule.conditionsIn) ||
+                        (text.length - rule.suffixIn.length + rule.suffixOut.length) <= 0
                     ) {
                         continue;
                     }
                     results.push(this._createTransformedText(
-                        text.substring(0, text.length - suffixIn.length) + suffixOut,
+                        text.substring(0, text.length - rule.suffixIn.length) + rule.suffixOut,
                         rule.conditionsOut,
                         this._extendTrace(trace, {transform: name, ruleIndex: j})
                     ));
