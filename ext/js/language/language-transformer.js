@@ -143,8 +143,8 @@ export class LanguageTransformer {
                     const {suffixIn, suffixOut, conditionsIn, conditionsOut} = rule;
                     if (
                         !text.endsWith(suffixIn) ||
-                        (text.length - suffixIn.length + suffixOut.length) <= 0 ||
-                        !LanguageTransformer.conditionsMatch(conditions, conditionsIn)
+                        !LanguageTransformer.conditionsMatch(conditions, conditionsIn) ||
+                        (text.length - suffixIn.length + suffixOut.length) <= 0
                     ) {
                         continue;
                     }
