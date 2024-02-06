@@ -146,10 +146,10 @@ export class LanguageTransformer {
 
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
+                    if (!LanguageTransformer.conditionsMatch(conditions, rule.conditionsIn)) { continue; }
                     const {suffixIn, suffixOut} = rule;
                     if (
                         !text.endsWith(suffixIn) ||
-                        !LanguageTransformer.conditionsMatch(conditions, rule.conditionsIn) ||
                         (text.length - suffixIn.length + suffixOut.length) <= 0
                     ) {
                         continue;
