@@ -137,8 +137,12 @@ export class LanguageTransformer {
         for (let i = 0; i < results.length; ++i) {
             const {text, conditions, trace} = results[i];
             for (const {name, rules, suffixHeuristic, conditionsHeuristic} of this._transforms) {
-                if (!suffixHeuristic.test(text)) { continue; }
-                if (!LanguageTransformer.conditionsMatch(conditions, conditionsHeuristic)) { continue; }
+                if (
+                    !LanguageTransformer.conditionsMatch(conditions, conditionsHeuristic) ||
+                    !suffixHeuristic.test(text)
+                ) {
+                    continue;
+                }
 
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
