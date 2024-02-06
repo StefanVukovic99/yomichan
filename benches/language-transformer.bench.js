@@ -28,12 +28,6 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const descriptor = parseJson(fs.readFileSync(path.join(dirname, '..', 'ext', 'data/language/japanese-transforms.json'), {encoding: 'utf8'}));
 const languageTransformer = new LanguageTransformer();
 
-describe('addDescriptor', () => {
-    bench('addDescriptor', () => {
-        languageTransformer.addDescriptor(descriptor);
-    });
-});
-
 describe('Language transformer basic tests', () => {
     const adjectiveInflections = [
         '愛しい',
@@ -105,5 +99,11 @@ describe('Language transformer basic tests', () => {
         for (const transform of [...adjectiveInflections, ...verbInflections, ...inflectionCombinations]) {
             languageTransformer.transform(transform);
         }
+    });
+});
+
+describe('addDescriptor', () => {
+    bench('addDescriptor', () => {
+        languageTransformer.addDescriptor(descriptor);
     });
 });
