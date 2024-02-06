@@ -27,6 +27,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 /** @type {import('language-transformer').LanguageTransformDescriptor} */
 const descriptor = parseJson(fs.readFileSync(path.join(dirname, '..', 'ext', 'data/language/japanese-transforms.json'), {encoding: 'utf8'}));
 const languageTransformer = new LanguageTransformer();
+languageTransformer.addDescriptor(descriptor);
 
 describe('Language transformer basic tests', () => {
     const adjectiveInflections = [
