@@ -67,7 +67,8 @@ export class LanguageTransformer {
             }
             const suffixes = rules.map((rule) => rule.suffixIn);
             const suffixHeuristic = new RegExp(`(${suffixes.join('|')})$`);
-            transforms2.push({name, rules: rules2, suffixHeuristic});
+            const conditionsHeuristic = rules2.reduce((acc, rule) => acc | rule.conditionsIn, 0);
+            transforms2.push({name, rules: rules2, suffixHeuristic, conditionsHeuristic});
         }
 
         this._nextFlagIndex = nextFlagIndex;
@@ -135,16 +136,25 @@ export class LanguageTransformer {
         const results = [this._createTransformedText(sourceText, 0, [])];
         for (let i = 0; i < results.length; ++i) {
             const {text, conditions, trace} = results[i];
-            for (const {name, rules, suffixHeuristic} of this._transforms) {
-                if (!suffixHeuristic.test(text)) { continue; }
+            for (const {name, rules, suffixHeuristic, conditionsHeuristic} of this._transforms) {
+                if (
+                    !LanguageTransformer.conditionsMatch(conditions, conditionsHeuristic) ||
+                    !suffixHeuristic.test(text)
+                ) {
+                    continue;
+                }
 
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
-                    if (!LanguageTransformer.conditionsMatch(conditions, rule.conditionsIn)) { continue; }
-                    const {suffixIn, suffixOut} = rule;
-                    if (!text.endsWith(suffixIn) || (text.length - suffixIn.length + suffixOut.length) <= 0) { continue; }
+                    if (
+                        !text.endsWith(rule.suffixIn) ||
+                        !LanguageTransformer.conditionsMatch(conditions, rule.conditionsIn) ||
+                        (text.length - rule.suffixIn.length + rule.suffixOut.length) <= 0
+                    ) {
+                        continue;
+                    }
                     results.push(this._createTransformedText(
-                        text.substring(0, text.length - suffixIn.length) + suffixOut,
+                        text.substring(0, text.length - rule.suffixIn.length) + rule.suffixOut,
                         rule.conditionsOut,
                         this._extendTrace(trace, {transform: name, ruleIndex: j})
                     ));
