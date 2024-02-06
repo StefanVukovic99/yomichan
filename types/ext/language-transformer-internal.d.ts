@@ -19,6 +19,7 @@ export type Transform = {
     name: string;
     rules: Rule[];
     suffixHeuristic: RegExp;
+    conditionsHeuristic: number;
 };
 
 export type Rule = {

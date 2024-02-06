@@ -67,7 +67,8 @@ export class LanguageTransformer {
             }
             const suffixes = rules.map((rule) => rule.suffixIn);
             const suffixHeuristic = new RegExp(`(${suffixes.join('|')})$`);
-            transforms2.push({name, rules: rules2, suffixHeuristic});
+            const conditionsHeuristic = rules2.reduce((acc, rule) => acc | rule.conditionsIn, 0);
+            transforms2.push({name, rules: rules2, suffixHeuristic, conditionsHeuristic});
         }
 
         this._nextFlagIndex = nextFlagIndex;
@@ -135,8 +136,9 @@ export class LanguageTransformer {
         const results = [this._createTransformedText(sourceText, 0, [])];
         for (let i = 0; i < results.length; ++i) {
             const {text, conditions, trace} = results[i];
-            for (const {name, rules, suffixHeuristic} of this._transforms) {
+            for (const {name, rules, suffixHeuristic, conditionsHeuristic} of this._transforms) {
                 if (!suffixHeuristic.test(text)) { continue; }
+                if (!LanguageTransformer.conditionsMatch(conditions, conditionsHeuristic)) { continue; }
 
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
