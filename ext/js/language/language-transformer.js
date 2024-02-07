@@ -139,8 +139,8 @@ export class LanguageTransformer {
         for (let i = 0; i < results.length; ++i) {
             const {text, conditions, trace} = results[i];
             for (const transform of this._transforms) {
+                if (!LanguageTransformer.conditionsMatch(conditions, transform.conditionsHeuristic)) { continue; }
                 if (!transform.suffixHeuristic.test(text)) { continue; }
-                // if (!LanguageTransformer.conditionsMatch(conditions, transform.conditionsHeuristic)) { continue; }
 
                 const {rules} = transform;
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
