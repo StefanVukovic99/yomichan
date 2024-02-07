@@ -142,7 +142,7 @@ export class LanguageTransformer {
                 if (!transform.suffixHeuristic.test(text)) { continue; }
                 if (!LanguageTransformer.conditionsMatch(conditions, transform.conditionsHeuristic)) { continue; }
 
-                const {name, rules} = transform;
+                const {rules} = transform;
                 for (let j = 0, jj = rules.length; j < jj; ++j) {
                     const rule = rules[j];
                     if (
@@ -155,7 +155,7 @@ export class LanguageTransformer {
                     results.push(this._createTransformedText(
                         text.substring(0, text.length - rule.suffixIn.length) + rule.suffixOut,
                         rule.conditionsOut,
-                        this._extendTrace(trace, {transform: name, ruleIndex: j})
+                        this._extendTrace(trace, {transform: transform.name, ruleIndex: j})
                     ));
                 }
             }
