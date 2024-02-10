@@ -47,7 +47,7 @@ export function getLanguages() {
  */
 export function getTextPreprocessors(iso) {
     const language = languages.get(iso);
-    if (!language) {
+    if (typeof language === 'undefined') {
         throw new Error(`Language not found: ${iso}`);
     }
     return language.textPreprocessors;
