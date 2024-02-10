@@ -18,7 +18,7 @@
 /** @type {import('language').TextPreprocessorOptions<boolean>} */
 export const basicTextPreprocessorOptions = [false, true];
 
-/** @type {import('language').TextPreprocessor} */
+/** @type {import('language').TextPreprocessor<boolean>} */
 export const decapitalize = {
     id: 'decapitalize',
     name: 'Decapitalize text',
@@ -27,7 +27,7 @@ export const decapitalize = {
     process: (str, setting) => setting ? str.toLowerCase() : str
 };
 
-/** @type {import('language').TextPreprocessor} */
+/** @type {import('language').TextPreprocessor<boolean>} */
 export const capitalizeFirstLetter = {
     id: 'capitalizeFirstLetter',
     name: 'Capitalize first letter',
