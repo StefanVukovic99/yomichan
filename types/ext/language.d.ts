@@ -20,21 +20,29 @@ import type {SafeAny} from './core';
 
 export type TextPreprocessorOptions<T = unknown> = T[];
 
-export type TextPreprocessorFunction<T = unknown> = (str: string, setting: T, sourceMap?: TextSourceMap) => string;
+export type TextPreprocessorFunction<T = unknown> = (str: string, setting: T, sourceMap: TextSourceMap) => string;
 
 export type TextPreprocessor<T = unknown> = {
-    id: string;
     name: string;
     description: string;
     options: TextPreprocessorOptions<T>;
     process: TextPreprocessorFunction<T>;
 };
 
-export type Language = {
+export type LanguageAndPreprocessors = {
+    iso: string;
+    textPreprocessors: TextPreprocessorWithId<unknown>[];
+};
+
+export type TextPreprocessorWithId<T = unknown> = {
+    id: string;
+    textPreprocessor: TextPreprocessor<T>;
+};
+
+export type LanguageSummary = {
     name: string;
     iso: string;
     exampleText: string;
-    textPreprocessors: TextPreprocessor<SafeAny>[];
 };
 
 export type LanguageDescriptor<TTextPreprocessorDescriptor extends TextPreprocessorDescriptor> = {
