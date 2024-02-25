@@ -1,5 +1,8 @@
 # Yezichak 👅
 
+> Most of the features of Yezichak have been merged into [Yomitan](https://github.com/themoeway/yomitan). 
+> Yezichak is no longer being actively developed, and it is recommended that you use Yomitan instead, with dictionaries from [KTY](https://github.com/themoeway/kaikki-to-yomitan).
+
 Yezichak is a fork of yomichan meant to work with languages other than Japanese. It turns your web browser into a tool for building language proficiency by helping you to decipher texts which would be otherwise too difficult to tackle. 
 
 Yezichak provides advanced features not available in other browser-based dictionaries:
