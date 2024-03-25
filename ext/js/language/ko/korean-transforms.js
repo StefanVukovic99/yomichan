@@ -73,7 +73,6 @@ export const koreanTransforms = {
     transforms: [
         {
             name: '거나',
-            description: 'Conditional',
             rules: [
                 suffixInflection('ㄱㅓㄴㅏ', 'ㄷㅏ', [], ['v', 'adj']),
                 suffixInflection('ㄱㅓㄴㅏ', '', [], ['p', 'f', 'euob', 'eusi']),
