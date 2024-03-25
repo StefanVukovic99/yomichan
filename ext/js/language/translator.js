@@ -482,8 +482,8 @@ export class Translator {
                 const rawSource = sourceMap.source.substring(0, sourceMap.getSourceLength(i));
                 for (const deinflection of this._multiLanguageTransformer.transform(language, source)) {
                     const {trace, conditions} = deinflection;
-                    let {text: transformedText} = deinflection;
                     for (const postprocessorVariant of this._generateArrayVariants(postprocessorOptionsSpace)) {
+                        let {text: transformedText} = deinflection;
                         for (const postprocessor of textPostprocessors.values()) {
                             const {id, textProcessor} = postprocessor;
                             const setting = postprocessorVariant.get(id);
