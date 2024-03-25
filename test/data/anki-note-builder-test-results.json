@@ -3921,7 +3921,7 @@
     ]
   },
   {
-    "name": "Test korean deinflection",
+    "name": "Test text postprocessing",
     "results": [
       {
         "audio": "",

@@ -458,7 +458,7 @@
             ]
         },
         {
-            "name": "Test korean deinflection",
+            "name": "Test text postprocessing",
             "func": "findTerms",
             "mode": "split",
             "text": "마시거나",

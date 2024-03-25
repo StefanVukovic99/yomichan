@@ -18606,7 +18606,7 @@
     ]
   },
   {
-    "name": "Test korean deinflection",
+    "name": "Test text postprocessing",
     "originalTextLength": 4,
     "dictionaryEntries": [
       {

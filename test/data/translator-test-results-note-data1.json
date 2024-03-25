@@ -32942,7 +32942,7 @@
     ]
   },
   {
-    "name": "Test korean deinflection",
+    "name": "Test text postprocessing",
     "noteDataList": [
       {
         "marker": "{marker}",
