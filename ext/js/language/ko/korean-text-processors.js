@@ -23,7 +23,7 @@ export const disassembleHangul = {
     description: 'Disassemble Hangul characters into jamo.',
     options: [true], // Could probably also be set to [false, true], but this way it is always on
     process: (str) => {
-        return Hangul.disassemble(str);
+        return Hangul.disassemble(str, false).join('');
     }
 };
 
