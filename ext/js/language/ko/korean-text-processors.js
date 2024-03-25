@@ -15,9 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// import {assemble, disassemble} from './korean-hangul.js';
-
-import Hangul from '../../lib/hangul-js.js';
+import {Hangul} from '../../../lib/hangul-js.js';
 
 /** @type {import('language').TextProcessor<boolean>} */
 export const disassembleHangul = {

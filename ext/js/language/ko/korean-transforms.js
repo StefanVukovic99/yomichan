@@ -23,7 +23,7 @@ export const koreanTransforms = {
     conditions: {
         v: {
             name: 'Verb or Auxiliary Verb',
-            partsOfSpeech: ['v'],
+            isDictionaryForm: true,
             i18n: [
                 {
                     language: 'ko',
@@ -33,7 +33,7 @@ export const koreanTransforms = {
         },
         adj: {
             name: 'Adjective or Auxiliary Adjective',
-            partsOfSpeech: ['adj'],
+            isDictionaryForm: true,
             i18n: [
                 {
                     language: 'ko',
@@ -43,31 +43,31 @@ export const koreanTransforms = {
         },
         p: {
             name: 'Intermediate past tense ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         },
         f: {
             name: 'Intermediate future tense ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         },
         eusi: {
             name: 'Intermediate formal ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         },
         euob: {
             name: 'Intermediate formal ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         },
         sao: {
             name: 'Intermediate formal ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         },
         saob: {
             name: 'Intermediate formal ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         },
         sab: {
             name: 'Intermediate formal ending',
-            partsOfSpeech: []
+            isDictionaryForm: false
         }
     },
     transforms: [
