@@ -457,25 +457,21 @@ export class Translator {
         const used = new Set();
 
         for (
-            let source = text, i = text.length;
+            let i = text.length;
             i > 0;
-            i = this._getNextSubstringLength(options.searchResolution, i, source)
+            i = this._getNextSubstringLength(options.searchResolution, i, text)
         ) {
             const rawSource = text.substring(0, i);
 
             for (const preprocessorVariant of preprocessorVariants) {
-                source = rawSource;
+                let source = rawSource;
 
                 const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
                 if (textReplacements !== null) {
                     source = this._applyTextReplacements(source, textReplacements);
                 }
 
-                for (const preprocessor of textPreprocessors.values()) {
-                    const {id, textProcessor} = preprocessor;
-                    const setting = preprocessorVariant.get(id);
-                    source = textProcessor.process(source, setting);
-                }
+                source = this._applyTextProcessors(textPreprocessors, preprocessorVariant, source);
 
                 if (used.has(source)) { continue; }
                 used.add(source);
@@ -483,11 +479,7 @@ export class Translator {
                     const {trace, conditions} = deinflection;
                     for (const postprocessorVariant of postprocessorVariants) {
                         let {text: transformedText} = deinflection;
-                        for (const postprocessor of textPostprocessors.values()) {
-                            const {id, textProcessor} = postprocessor;
-                            const setting = postprocessorVariant.get(id);
-                            transformedText = textProcessor.process(transformedText, setting);
-                        }
+                        transformedText = this._applyTextProcessors(textPostprocessors, postprocessorVariant, transformedText);
 
                         /** @type {import('dictionary').InflectionRuleChainCandidate} */
                         const inflectionRuleChainCandidate = {
@@ -500,6 +492,21 @@ export class Translator {
             }
         }
         return deinflections;
+    }
+
+    /**
+     * @param {import('language').TextProcessorWithId<unknown>[]} textPostprocessors
+     * @param {Map<string, unknown>}postprocessorVariant
+     * @param {string} transformedText
+     * @returns {string}
+     */
+    _applyTextProcessors(textPostprocessors, postprocessorVariant, transformedText) {
+        for (const postprocessor of textPostprocessors.values()) {
+            const {id, textProcessor} = postprocessor;
+            const setting = postprocessorVariant.get(id);
+            transformedText = textProcessor.process(transformedText, setting);
+        }
+        return transformedText;
     }
 
     /**
