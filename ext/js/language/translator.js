@@ -459,10 +459,10 @@ export class Translator {
             i > 0;
             i = this._getNextSubstringLength(options.searchResolution, i, source)
         ) {
-            for (const preprocessorVariant of this._generateArrayVariants(preprocessorVariantSpace)) {
-                source = text.substring(0, i);
+            const rawSource = text.substring(0, i);
 
-                const rawSource = source;
+            for (const preprocessorVariant of this._generateArrayVariants(preprocessorVariantSpace)) {
+                source = rawSource;
 
                 const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
                 if (textReplacements !== null) {
