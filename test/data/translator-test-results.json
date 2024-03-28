@@ -11424,7 +11424,7 @@
   },
   {
     "name": "Ignore text inside parentheses",
-    "originalTextLength": 4,
+    "originalTextLength": 10,
     "dictionaryEntries": [
       {
         "type": "term",
@@ -11448,7 +11448,7 @@
             "reading": "うちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "打(う)ち込(こ)む",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -11642,7 +11642,7 @@
             "reading": "ぶちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "打(う)ち込(こ)む",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -11836,7 +11836,7 @@
             "reading": "うちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "打(う)ち込(こ)む",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -12030,7 +12030,7 @@
             "reading": "ぶちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "打(う)ち込(こ)む",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -12226,7 +12226,7 @@
             "reading": "うつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "打(う)ち",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -12398,7 +12398,7 @@
             "reading": "ぶつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "打(う)ち",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -12570,7 +12570,7 @@
             "reading": "うつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "打(う)ち",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -12742,7 +12742,7 @@
             "reading": "ぶつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "打(う)ち",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -12912,7 +12912,7 @@
             "reading": "だ",
             "sources": [
               {
-                "originalText": "打",
+                "originalText": "打(う)",
                 "transformedText": "打",
                 "deinflectedText": "打",
                 "matchType": "exact",
@@ -13080,7 +13080,7 @@
             "reading": "ダース",
             "sources": [
               {
-                "originalText": "打",
+                "originalText": "打(う)",
                 "transformedText": "打",
                 "deinflectedText": "打",
                 "matchType": "exact",
@@ -13243,7 +13243,7 @@
   },
   {
     "name": "Remove parentheses around text",
-    "originalTextLength": 4,
+    "originalTextLength": 12,
     "dictionaryEntries": [
       {
         "type": "term",
@@ -13267,7 +13267,7 @@
             "reading": "うちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "(打)(ち)(込)(む)",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -13461,7 +13461,7 @@
             "reading": "ぶちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "(打)(ち)(込)(む)",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -13655,7 +13655,7 @@
             "reading": "うちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "(打)(ち)(込)(む)",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -13849,7 +13849,7 @@
             "reading": "ぶちこむ",
             "sources": [
               {
-                "originalText": "打ち込む",
+                "originalText": "(打)(ち)(込)(む)",
                 "transformedText": "打ち込む",
                 "deinflectedText": "打ち込む",
                 "matchType": "exact",
@@ -14045,7 +14045,7 @@
             "reading": "うつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "(打)(ち)(",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -14217,7 +14217,7 @@
             "reading": "ぶつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "(打)(ち)(",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -14389,7 +14389,7 @@
             "reading": "うつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "(打)(ち)(",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -14561,7 +14561,7 @@
             "reading": "ぶつ",
             "sources": [
               {
-                "originalText": "打ち",
+                "originalText": "(打)(ち)(",
                 "transformedText": "打ち",
                 "deinflectedText": "打つ",
                 "matchType": "exact",
@@ -14731,7 +14731,7 @@
             "reading": "だ",
             "sources": [
               {
-                "originalText": "打",
+                "originalText": "(打)(",
                 "transformedText": "打",
                 "deinflectedText": "打",
                 "matchType": "exact",
@@ -14899,7 +14899,7 @@
             "reading": "ダース",
             "sources": [
               {
-                "originalText": "打",
+                "originalText": "(打)(",
                 "transformedText": "打",
                 "deinflectedText": "打",
                 "matchType": "exact",
@@ -15062,7 +15062,7 @@
   },
   {
     "name": "Test non-empty replacement",
-    "originalTextLength": 2,
+    "originalTextLength": 4,
     "dictionaryEntries": [
       {
         "type": "term",
@@ -15088,7 +15088,7 @@
             "reading": "よむ",
             "sources": [
               {
-                "originalText": "よみ",
+                "originalText": "test",
                 "transformedText": "よみ",
                 "deinflectedText": "よむ",
                 "matchType": "exact",
@@ -15172,7 +15172,7 @@
   },
   {
     "name": "Test non-empty replacement at end",
-    "originalTextLength": 3,
+    "originalTextLength": 5,
     "dictionaryEntries": [
       {
         "type": "term",
@@ -15196,7 +15196,7 @@
             "reading": "つよみ",
             "sources": [
               {
-                "originalText": "つよみ",
+                "originalText": "つtest",
                 "transformedText": "つよみ",
                 "deinflectedText": "つよみ",
                 "matchType": "exact",
@@ -15280,7 +15280,7 @@
   },
   {
     "name": "Test non-empty replacement at start",
-    "originalTextLength": 5,
+    "originalTextLength": 7,
     "dictionaryEntries": [
       {
         "type": "term",
@@ -15307,7 +15307,7 @@
             "reading": "よむ",
             "sources": [
               {
-                "originalText": "よみました",
+                "originalText": "testました",
                 "transformedText": "よみました",
                 "deinflectedText": "よむ",
                 "matchType": "exact",

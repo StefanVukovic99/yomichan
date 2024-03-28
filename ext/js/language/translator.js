@@ -462,12 +462,12 @@ export class Translator {
             for (const preprocessorVariant of this._generateArrayVariants(preprocessorVariantSpace)) {
                 source = text.substring(0, i);
 
+                const rawSource = source;
+
                 const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
                 if (textReplacements !== null) {
                     source = this._applyTextReplacements(source, textReplacements);
                 }
-
-                const rawSource = source;
 
                 for (const preprocessor of textPreprocessors.values()) {
                     const {id, textProcessor} = preprocessor;
