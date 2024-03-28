@@ -456,20 +456,10 @@ export class Translator {
         const used = new Set();
 
         for (const preprocessorVariant of this._generateArrayVariants(preprocessorVariantSpace)) {
-            const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
-
             let text2 = text;
             const sourceMap = new TextSourceMap(text2);
 
-            if (textReplacements !== null) {
-                text2 = this._applyTextReplacements(text2, sourceMap, textReplacements);
-            }
-
-            for (const preprocessor of textPreprocessors.values()) {
-                const {id, textProcessor} = preprocessor;
-                const setting = preprocessorVariant.get(id);
-                text2 = textProcessor.process(text2, setting, sourceMap);
-            }
+            text2 = this.applyTextProcessing(preprocessorVariant, text2, sourceMap, textPreprocessors);
 
             for (
                 let source = text2, i = text2.length;
@@ -501,6 +491,27 @@ export class Translator {
             }
         }
         return deinflections;
+    }
+
+    /**
+     * @param preprocessorVariant
+     * @param {string} text2
+     * @param {TextSourceMap} sourceMap
+     * @param textPreprocessors
+     * @returns {string}
+     */
+    applyTextProcessing(preprocessorVariant, text2, sourceMap, textPreprocessors) {
+        const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
+        if (textReplacements !== null) {
+            text2 = this._applyTextReplacements(text2, sourceMap, textReplacements);
+        }
+
+        for (const preprocessor of textPreprocessors.values()) {
+            const {id, textProcessor} = preprocessor;
+            const setting = preprocessorVariant.get(id);
+            text2 = textProcessor.process(text2, setting, sourceMap);
+        }
+        return text2;
     }
 
     /**
