@@ -474,9 +474,9 @@ export class Translator {
             for (
                 let source = text2, i = text2.length;
                 i > 0;
-                i = this._getNextSubstringLength(options.searchResolution, i, source)
+                i = this._getNextSubstringLength(options.searchResolution, i, source),
+                source = text2.substring(0, i)
             ) {
-                source = text2.substring(0, i);
                 if (used.has(source)) { break; }
                 used.add(source);
                 const rawSource = sourceMap.source.substring(0, sourceMap.getSourceLength(i));
