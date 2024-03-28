@@ -449,6 +449,8 @@ export class Translator {
 
         const preprocessorVariantSpace = new Map(preprocessorOptionsSpace);
         preprocessorVariantSpace.set('textReplacements', this._getTextReplacementsVariants(options));
+        const preprocessorVariants = this._getArrayVariants(preprocessorVariantSpace);
+        const postprocessorVariants = this._getArrayVariants(postprocessorOptionsSpace);
 
         /** @type {import('translation-internal').DatabaseDeinflection[]} */
         const deinflections = [];
@@ -461,7 +463,7 @@ export class Translator {
         ) {
             const rawSource = text.substring(0, i);
 
-            for (const preprocessorVariant of this._generateArrayVariants(preprocessorVariantSpace)) {
+            for (const preprocessorVariant of preprocessorVariants) {
                 source = rawSource;
 
                 const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
@@ -479,7 +481,7 @@ export class Translator {
                 used.add(source);
                 for (const deinflection of this._multiLanguageTransformer.transform(language, source)) {
                     const {trace, conditions} = deinflection;
-                    for (const postprocessorVariant of this._generateArrayVariants(postprocessorOptionsSpace)) {
+                    for (const postprocessorVariant of postprocessorVariants) {
                         let {text: transformedText} = deinflection;
                         for (const postprocessor of textPostprocessors.values()) {
                             const {id, textProcessor} = postprocessor;
@@ -1333,10 +1335,11 @@ export class Translator {
 
     /**
      * @param {Map<string, unknown[]>} arrayVariants
-     * @yields {Map<string, unknown>}
-     * @returns {Generator<Map<string, unknown>, void, void>}
+     * @returns {Map<string, unknown>[]}
      */
-    *_generateArrayVariants(arrayVariants) {
+    _getArrayVariants(arrayVariants) {
+        /** @type {Map<string, unknown>[]} */
+        const results = [];
         const variantKeys = [...arrayVariants.keys()];
         const entryVariantLengths = [];
         for (const key of variantKeys) {
@@ -1358,8 +1361,9 @@ export class Translator {
                 remainingIndex = Math.floor(remainingIndex / entryVariants.length);
             }
 
-            yield variant;
+            results.push(variant);
         }
+        return results;
     }
 
     /**
