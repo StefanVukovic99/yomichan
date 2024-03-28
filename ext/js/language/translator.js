@@ -453,38 +453,48 @@ export class Translator {
         const deinflections = [];
         const used = new Set();
 
-        for (const arrayVariant of this._generateArrayVariants(variantSpace)) {
-            const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (arrayVariant.get('textReplacements'));
+        for (
+            let source = text, i = text.length;
+            i > 0;
+            i = this._getNextSubstringLength(options.searchResolution, i, source)
+        ) {
+            for (const preprocessorVariant of this._generateArrayVariants(preprocessorVariantSpace)) {
+                source = text.substring(0, i);
+                const sourceMap = new TextSourceMap(source);
 
-            let text2 = text;
-            const sourceMap = new TextSourceMap(text2);
+                const textReplacements = /** @type {import('translation').FindTermsTextReplacement[] | null} */ (preprocessorVariant.get('textReplacements'));
+                if (textReplacements !== null) {
+                    source = this._applyTextReplacements(source, sourceMap, textReplacements);
+                }
 
-            if (textReplacements !== null) {
-                text2 = this._applyTextReplacements(text2, sourceMap, textReplacements);
-            }
+                const rawSource = source;
 
-            for (const preprocessor of textPreprocessors.values()) {
-                const {id, textPreprocessor} = preprocessor;
-                const setting = arrayVariant.get(id);
-                text2 = textPreprocessor.process(text2, setting, sourceMap);
-            }
+                for (const preprocessor of textPreprocessors.values()) {
+                    const {id, textProcessor} = preprocessor;
+                    const setting = preprocessorVariant.get(id);
+                    source = textProcessor.process(source, setting, sourceMap);
+                }
 
-            for (
-                let source = text2, i = text2.length;
-                i > 0;
-                i = this._getNextSubstringLength(options.searchResolution, i, source)
-            ) {
-                source = text2.substring(0, i);
-                if (used.has(source)) { break; }
+                if (used.has(source)) { continue; }
                 used.add(source);
-                const rawSource = sourceMap.source.substring(0, sourceMap.getSourceLength(i));
-                for (const {text: transformedText, conditions, trace} of this._multiLanguageTransformer.transform(language, source)) {
-                    /** @type {import('dictionary').InflectionRuleChainCandidate} */
-                    const inflectionRuleChainCandidate = {
-                        source: 'algorithm',
-                        inflectionRules: trace.map((frame) => frame.transform)
-                    };
-                    deinflections.push(this._createDeinflection(rawSource, source, transformedText, conditions, [inflectionRuleChainCandidate]));
+                // Const rawSource = sourceMap.source.substring(0, sourceMap.getSourceLength(i));
+                for (const deinflection of this._multiLanguageTransformer.transform(language, source)) {
+                    const {trace, conditions} = deinflection;
+                    for (const postprocessorVariant of this._generateArrayVariants(postprocessorOptionsSpace)) {
+                        let {text: transformedText} = deinflection;
+                        for (const postprocessor of textPostprocessors.values()) {
+                            const {id, textProcessor} = postprocessor;
+                            const setting = postprocessorVariant.get(id);
+                            transformedText = textProcessor.process(transformedText, setting, sourceMap);
+                        }
+
+                        /** @type {import('dictionary').InflectionRuleChainCandidate} */
+                        const inflectionRuleChainCandidate = {
+                            source: 'algorithm',
+                            inflectionRules: trace.map((frame) => frame.transform)
+                        };
+                        deinflections.push(this._createDeinflection(rawSource, source, transformedText, conditions, [inflectionRuleChainCandidate]));
+                    }
                 }
             }
         }
