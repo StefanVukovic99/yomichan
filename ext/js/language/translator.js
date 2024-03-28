@@ -479,7 +479,6 @@ export class Translator {
 
                 if (used.has(source)) { continue; }
                 used.add(source);
-                // Const rawSource = sourceMap.source.substring(0, sourceMap.getSourceLength(i));
                 for (const deinflection of this._multiLanguageTransformer.transform(language, source)) {
                     const {trace, conditions} = deinflection;
                     for (const postprocessorVariant of this._generateArrayVariants(postprocessorOptionsSpace)) {
