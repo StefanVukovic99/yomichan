@@ -19821,7 +19821,7 @@
           "type": "term",
           "id": 7,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "打(う)ち込(こ)む",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -20243,7 +20243,7 @@
           "type": "term",
           "id": 9,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "打(う)ち込(こ)む",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -20665,7 +20665,7 @@
           "type": "term",
           "id": 8,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "打(う)ち込(こ)む",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -21087,7 +21087,7 @@
           "type": "term",
           "id": 10,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "打(う)ち込(こ)む",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -21509,7 +21509,7 @@
           "type": "term",
           "id": 3,
           "source": "打ち",
-          "rawSource": "打ち",
+          "rawSource": "打(う)ち",
           "sourceTerm": "打つ",
           "inflectionRuleChainCandidates": [
             {
@@ -21825,7 +21825,7 @@
           "type": "term",
           "id": 5,
           "source": "打ち",
-          "rawSource": "打ち",
+          "rawSource": "打(う)ち",
           "sourceTerm": "打つ",
           "inflectionRuleChainCandidates": [
             {
@@ -22141,7 +22141,7 @@
           "type": "term",
           "id": 4,
           "source": "打ち",
-          "rawSource": "打ち",
+          "rawSource": "打(う)ち",
           "sourceTerm": "打つ",
           "inflectionRuleChainCandidates": [
             {
@@ -22457,7 +22457,7 @@
           "type": "term",
           "id": 6,
           "source": "打ち",
-          "rawSource": "打ち",
+          "rawSource": "打(う)ち",
           "sourceTerm": "打つ",
           "inflectionRuleChainCandidates": [
             {
@@ -23415,7 +23415,7 @@
           "type": "term",
           "id": 7,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "(打)(ち)(込)(む)",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -23837,7 +23837,7 @@
           "type": "term",
           "id": 9,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "(打)(ち)(込)(む)",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -24259,7 +24259,7 @@
           "type": "term",
           "id": 8,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "(打)(ち)(込)(む)",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -24681,7 +24681,7 @@
           "type": "term",
           "id": 10,
           "source": "打ち込む",
-          "rawSource": "打ち込む",
+          "rawSource": "(打)(ち)(込)(む)",
           "sourceTerm": "打ち込む",
           "inflectionRuleChainCandidates": [
             {
@@ -27009,7 +27009,7 @@
           "type": "term",
           "id": 12,
           "source": "よみ",
-          "rawSource": "よみ",
+          "rawSource": "test",
           "sourceTerm": "よむ",
           "inflectionRuleChainCandidates": [
             {
@@ -27171,7 +27171,7 @@
           "type": "term",
           "id": 13,
           "source": "つよみ",
-          "rawSource": "つよみ",
+          "rawSource": "つtest",
           "sourceTerm": "つよみ",
           "inflectionRuleChainCandidates": [
             {
@@ -27331,7 +27331,7 @@
           "type": "term",
           "id": 12,
           "source": "よみました",
-          "rawSource": "よみました",
+          "rawSource": "testました",
           "sourceTerm": "よむ",
           "inflectionRuleChainCandidates": [
             {
