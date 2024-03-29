@@ -455,6 +455,7 @@ export class Translator {
         /** @type {import('translation-internal').DatabaseDeinflection[]} */
         const deinflections = [];
         const used = new Set();
+        /** @type {Map<string, import('core').SafeAny>} */
         const sourceCache = new Map();
 
         for (
@@ -499,37 +500,31 @@ export class Translator {
      * @param {import('language').TextProcessorWithId<unknown>[]} textPostprocessors
      * @param {Map<string, unknown>} postprocessorVariant
      * @param {string} text
-     * @param {Map<any, any>} textCache
+     * @param {Map<string, import('core').SafeAny>} textCache
      * @returns {string}
      */
     _applyTextProcessors(textPostprocessors, postprocessorVariant, text, textCache) {
         for (const {id, textProcessor: {process}} of textPostprocessors) {
             const setting = postprocessorVariant.get(id);
-
-            const level1 = textCache.get(text);
+            let level1 = textCache.get(text);
             if (!level1) {
-                textCache.set(text, new Map());
-                textCache.get(text).set(id, new Map());
-                text = process(text, setting);
-                textCache.get(text).get(id).set(setting, text);
-                continue;
+                level1 = new Map();
+                textCache.set(text, level1);
             }
 
-            const level2 = level1.get(id);
+            let level2 = level1.get(id);
             if (!level2) {
-                level1.set(id, new Map());
-                text = process(text, setting);
-                level1.get(id).set(setting, text);
-                continue;
+                level2 = new Map();
+                level1.set(id, level2);
             }
 
             if (!level2.has(setting)) {
-                text = process(text, setting);
-                level2.set(setting, text);
-                continue;
+                const processedText = process(text, setting);
+                level2.set(setting, processedText);
+                text = processedText;
+            } else {
+                text = level2.get(setting);
             }
-
-            text = level2.get(setting);
         }
 
         return text;
