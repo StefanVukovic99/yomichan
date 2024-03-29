@@ -455,6 +455,7 @@ export class Translator {
         /** @type {import('translation-internal').DatabaseDeinflection[]} */
         const deinflections = [];
         const used = new Set();
+        const sourceCache = new Map();
 
         for (
             let i = text.length;
@@ -471,7 +472,7 @@ export class Translator {
                     source = this._applyTextReplacements(source, textReplacements);
                 }
 
-                source = this._applyTextProcessors(textPreprocessors, preprocessorVariant, source);
+                source = this._applyTextProcessors(textPreprocessors, preprocessorVariant, source, sourceCache);
 
                 if (used.has(source)) { continue; }
                 used.add(source);
@@ -479,7 +480,7 @@ export class Translator {
                     const {trace, conditions} = deinflection;
                     for (const postprocessorVariant of postprocessorVariants) {
                         let {text: transformedText} = deinflection;
-                        transformedText = this._applyTextProcessors(textPostprocessors, postprocessorVariant, transformedText);
+                        transformedText = this._applyTextProcessors(textPostprocessors, postprocessorVariant, transformedText, sourceCache);
 
                         /** @type {import('dictionary').InflectionRuleChainCandidate} */
                         const inflectionRuleChainCandidate = {
@@ -496,16 +497,42 @@ export class Translator {
 
     /**
      * @param {import('language').TextProcessorWithId<unknown>[]} textPostprocessors
-     * @param {Map<string, unknown>}postprocessorVariant
-     * @param {string} transformedText
+     * @param {Map<string, unknown>} postprocessorVariant
+     * @param {string} text
+     * @param {Map<any, any>} textCache
      * @returns {string}
      */
-    _applyTextProcessors(textPostprocessors, postprocessorVariant, transformedText) {
+    _applyTextProcessors(textPostprocessors, postprocessorVariant, text, textCache) {
         for (const {id, textProcessor: {process}} of textPostprocessors) {
             const setting = postprocessorVariant.get(id);
-            transformedText = process(transformedText, setting);
+
+            const level1 = textCache.get(text);
+            if (!level1) {
+                textCache.set(text, new Map());
+                textCache.get(text).set(id, new Map());
+                text = process(text, setting);
+                textCache.get(text).get(id).set(setting, text);
+                continue;
+            }
+
+            const level2 = level1.get(id);
+            if (!level2) {
+                level1.set(id, new Map());
+                text = process(text, setting);
+                level1.get(id).set(setting, text);
+                continue;
+            }
+
+            if (!level2.has(setting)) {
+                text = process(text, setting);
+                level2.set(setting, text);
+                continue;
+            }
+
+            text = level2.get(setting);
         }
-        return transformedText;
+
+        return text;
     }
 
     /**
