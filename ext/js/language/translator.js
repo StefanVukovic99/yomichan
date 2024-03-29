@@ -501,10 +501,9 @@ export class Translator {
      * @returns {string}
      */
     _applyTextProcessors(textPostprocessors, postprocessorVariant, transformedText) {
-        for (const postprocessor of textPostprocessors.values()) {
-            const {id, textProcessor} = postprocessor;
+        for (const {id, textProcessor: {process}} of textPostprocessors) {
             const setting = postprocessorVariant.get(id);
-            transformedText = textProcessor.process(transformedText, setting);
+            transformedText = process(transformedText, setting);
         }
         return transformedText;
     }
