@@ -41,7 +41,7 @@ export class Translator {
         /** @type {RegExp} */
         this._numberRegex = /[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?/;
         /** @type {import('translation-internal').TextPreprocessorMap} */
-        this._textPreprocessors = new Map();
+        this._textProcessors = new Map();
     }
 
     /**
@@ -61,7 +61,7 @@ export class Translator {
             for (const {id, textProcessor} of textPostprocessors) {
                 postprocessorOptionsSpace.set(id, textProcessor.options);
             }
-            this._textPreprocessors.set(iso, {textPreprocessors, preprocessorOptionsSpace, textPostprocessors, postprocessorOptionsSpace});
+            this._textProcessors.set(iso, {textPreprocessors, preprocessorOptionsSpace, textPostprocessors, postprocessorOptionsSpace});
         }
     }
 
@@ -443,7 +443,7 @@ export class Translator {
      */
     _getAlgorithmDeinflections(text, options) {
         const {language} = options;
-        const info = this._textPreprocessors.get(language);
+        const info = this._textProcessors.get(language);
         if (typeof info === 'undefined') { throw new Error(`Unsupported language: ${language}`); }
         const {textPreprocessors, preprocessorOptionsSpace, textPostprocessors, postprocessorOptionsSpace} = info;
 
