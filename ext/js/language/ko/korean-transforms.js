@@ -3118,16 +3118,6 @@ export const koreanTransforms = {
             ]
         },
         {
-            name: '-ㅂ/습니까',
-            rules: [
-                suffixInflection('ㅂㄴㅣㄷㅏ', 'ㄷㅏ', [], ['v', 'adj', 'ida']),
-                suffixInflection('ㅂㄴㅣㄷㅏ', 'ㄹㄷㅏ', [], ['v', 'adj']),
-                suffixInflection('ㅅㅡㅂㄴㅣㄷㅏ', 'ㄷㅏ', [], ['v', 'adj']),
-                suffixInflection('ㅅㅡㅂㄴㅣㄷㅏ', '', [], ['p', 'f']),
-                suffixInflection('ㅂㄴㅣㄷㅏ', '', [], ['eusi'])
-            ]
-        },
-        {
             name: '-ㅂ/습니다',
             rules: [
                 suffixInflection('ㅂㄴㅣㄷㅏ', 'ㄷㅏ', [], ['v', 'adj', 'ida']),
