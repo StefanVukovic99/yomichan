@@ -28,7 +28,7 @@ import {logErrorLevelToNumber} from '../core/log-utilities.js';
 import {log} from '../core/log.js';
 import {isObjectNotArray} from '../core/object-utilities.js';
 import {clone, deferPromise, promiseTimeout} from '../core/utilities.js';
-import {invalidNoteId, isNoteDataValid} from '../data/anki-util.js';
+import {INVALID_NOTE_ID, isNoteDataValid} from '../data/anki-util.js';
 import {arrayBufferToBase64} from '../data/array-buffer-util.js';
 import {OptionsUtil} from '../data/options-util.js';
 import {getAllPermissions, hasPermissions, hasRequiredPermissionsForOptions} from '../data/permissions-util.js';
@@ -153,6 +153,7 @@ export class Backend {
             ['getAnkiConnectVersion',        this._onApiGetAnkiConnectVersion.bind(this)],
             ['isAnkiConnected',              this._onApiIsAnkiConnected.bind(this)],
             ['addAnkiNote',                  this._onApiAddAnkiNote.bind(this)],
+            ['updateAnkiNote',               this._onApiUpdateAnkiNote.bind(this)],
             ['getAnkiNoteInfo',              this._onApiGetAnkiNoteInfo.bind(this)],
             ['injectAnkiNoteMedia',          this._onApiInjectAnkiNoteMedia.bind(this)],
             ['viewNotes',                    this._onApiViewNotes.bind(this)],
@@ -313,6 +314,9 @@ export class Backend {
      * @param {import('clipboard-monitor').EventArgument<'change'>} details
      */
     async _onClipboardTextChange({text}) {
+        // Only update if tab does not exist
+        if (await this._tabExists('/search.html')) { return; }
+
         const {
             general: {language},
             clipboard: {maximumSearchLength}
@@ -539,6 +543,11 @@ export class Backend {
         return await this._anki.addNote(note);
     }
 
+    /** @type {import('api').ApiHandler<'updateAnkiNote'>} */
+    async _onApiUpdateAnkiNote({noteWithId}) {
+        return await this._anki.updateNoteFields(noteWithId);
+    }
+
     /**
      * @param {import('anki').Note[]} notes
      * @returns {Promise<import('backend').CanAddResults>}
@@ -600,7 +609,7 @@ export class Backend {
             const valid = isNoteDataValid(note);
 
             if (isDuplicate && duplicateNoteIds[originalIndices.indexOf(i)].length === 0) {
-                duplicateNoteIds[originalIndices.indexOf(i)] = [invalidNoteId];
+                duplicateNoteIds[originalIndices.indexOf(i)] = [INVALID_NOTE_ID];
             }
 
             const noteIds = isDuplicate ? duplicateNoteIds[originalIndices.indexOf(i)] : null;
@@ -964,10 +973,10 @@ export class Backend {
     // Command handlers
 
     /**
-     * @param {undefined|{mode: 'existingOrNewTab'|'newTab'|'popup', query?: string}} params
+     * @param {undefined|{mode: import('backend').Mode, query?: string}} params
      */
     async _onCommandOpenSearchPage(params) {
-        /** @type {'existingOrNewTab'|'newTab'|'popup'} */
+        /** @type {import('backend').Mode} */
         let mode = 'existingOrNewTab';
         let query = '';
         if (typeof params === 'object' && params !== null) {
@@ -1036,10 +1045,10 @@ export class Backend {
     }
 
     /**
-     * @param {undefined|{mode: 'existingOrNewTab'|'newTab'|'popup'}} params
+     * @param {undefined|{mode: import('backend').Mode}} params
      */
     async _onCommandOpenSettingsPage(params) {
-        /** @type {'existingOrNewTab'|'newTab'|'popup'} */
+        /** @type {import('backend').Mode} */
         let mode = 'existingOrNewTab';
         if (typeof params === 'object' && params !== null) {
             mode = this._normalizeOpenSettingsPageMode(params.mode, mode);
@@ -1191,6 +1200,16 @@ export class Backend {
             }
         };
         return /** @type {?import('backend').TabInfo} */ (await this._findTabs(1000, false, predicate, true));
+    }
+
+    /**
+     * @param {string} urlParam
+     * @returns {Promise<boolean>}
+     */
+    async _tabExists(urlParam) {
+        const baseUrl = chrome.runtime.getURL(urlParam);
+        const urlPredicate = (/** @type {?string} */ url) => url !== null && url.startsWith(baseUrl);
+        return await this._findSearchPopupTab(urlPredicate) !== null;
     }
 
     /**
@@ -2546,7 +2565,7 @@ export class Backend {
     }
 
     /**
-     * @param {'existingOrNewTab'|'newTab'|'popup'} mode
+     * @param {import('backend').Mode} mode
      */
     async _openSettingsPage(mode) {
         const manifest = chrome.runtime.getManifest();
@@ -2675,8 +2694,8 @@ export class Backend {
 
     /**
      * @param {unknown} mode
-     * @param {'existingOrNewTab'|'newTab'|'popup'} defaultValue
-     * @returns {'existingOrNewTab'|'newTab'|'popup'}
+     * @param {import('backend').Mode} defaultValue
+     * @returns {import('backend').Mode}
      */
     _normalizeOpenSettingsPageMode(mode, defaultValue) {
         switch (mode) {
