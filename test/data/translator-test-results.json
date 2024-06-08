@@ -2462,7 +2462,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -2636,7 +2637,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -2810,7 +2812,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -2984,7 +2987,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -5240,7 +5244,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -5414,7 +5419,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -5982,7 +5988,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -6156,7 +6163,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -6712,7 +6720,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -6778,7 +6787,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -6844,7 +6854,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -6910,7 +6921,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -7590,7 +7602,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -7812,7 +7825,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -8849,7 +8863,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -9621,7 +9636,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "-te"
+                "name": "-te",
+                "description": "-te form"
               },
               {
                 "name": "progressive or perfect"
@@ -9630,7 +9646,8 @@
                 "name": "polite"
               },
               {
-                "name": "negative"
+                "name": "negative",
+                "description": "not"
               },
               {
                 "name": "past"
@@ -9831,7 +9848,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "-te"
+                "name": "-te",
+                "description": "-te form"
               },
               {
                 "name": "progressive or perfect"
@@ -9840,7 +9858,8 @@
                 "name": "polite"
               },
               {
-                "name": "negative"
+                "name": "negative",
+                "description": "not"
               },
               {
                 "name": "past"
@@ -10041,7 +10060,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "-te"
+                "name": "-te",
+                "description": "-te form"
               },
               {
                 "name": "progressive or perfect"
@@ -10050,7 +10070,8 @@
                 "name": "polite"
               },
               {
-                "name": "negative"
+                "name": "negative",
+                "description": "not"
               },
               {
                 "name": "past"
@@ -10251,7 +10272,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "-te"
+                "name": "-te",
+                "description": "-te form"
               },
               {
                 "name": "progressive or perfect"
@@ -10260,7 +10282,8 @@
                 "name": "polite"
               },
               {
-                "name": "negative"
+                "name": "negative",
+                "description": "not"
               },
               {
                 "name": "past"
@@ -10461,7 +10484,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -10635,7 +10659,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -10809,7 +10834,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -10983,7 +11009,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -12288,7 +12315,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -12462,7 +12490,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -12636,7 +12665,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -12810,7 +12840,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -14115,7 +14146,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -14289,7 +14321,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -14463,7 +14496,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -14637,7 +14671,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -15166,7 +15201,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -15961,7 +15997,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "masu stem"
+                "name": "masu stem",
+                "description": "Conjunctive; Continuative base"
               }
             ]
           }
@@ -18644,7 +18681,8 @@
             "source": "algorithm",
             "inflectionRules": [
               {
-                "name": "adv"
+                "name": "adverb",
+                "description": "Adverb form of i-adjectives"
               },
               {
                 "name": "kansai-ben",
