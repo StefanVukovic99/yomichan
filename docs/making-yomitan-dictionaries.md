@@ -77,20 +77,20 @@ For Yomitan to conjugate Japanese terms, they need the appropriate part of speec
 ## Tag Categories
 
 The second item in the array of the tag bank schema determines the tag category, affecting the tag color in the user interface. The categories include:
+| Category | Light theme color | Dark theme color |
+|-------------------------|------------------------|------------------------|
+| name |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#b6327a">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#992a67">tag</span>|
+| expression |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#f0ad4e">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#b07f39">tag</span>|
+| popular |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#0275d8">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#025caa">tag</span>|
+| frequent |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#5bc0de">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#4490a7">tag</span>|
+| archaism |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#d9534f">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#b04340">tag</span>|
+| dictionary |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#aa66cc">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#9057ad">tag</span>|
+| frequency |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#5cb85c">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#489148">tag</span>|
+| partOfSpeech |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#565656">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#565656">tag</span>|
+| search |<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#8a8a91">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#69696e">tag</span>|
+| pronunciation-dictionary|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#6640be">tag</span>|<span style="padding: 2.5px 5px; border-radius: 0.25em; font-weight: bold; background-color:#6640be">tag</span>|
 
-- name
-- expression
-- popular
-- frequent
-- archaism
-- dictionary
-- frequency
-- partOfSpeech
-- search
-- pronunciation-dictionary
-- search
-
-You can view the tag colors [here](https://github.com/themoeway/yomitan/blob/48f1d012ad5045319d4e492dfbefa39da92817b2/ext/css/display.css#L136-L149).
+You can also view the tag colors [here](https://github.com/themoeway/yomitan/blob/48f1d012ad5045319d4e492dfbefa39da92817b2/ext/css/display.css#L136-L149).
 
 # Community Contributions
 
